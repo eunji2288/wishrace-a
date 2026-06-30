@@ -1,0 +1,109 @@
+
+        <div class="result-legacy-divider"><span>레이스 결과 더 보기</span></div>
+
+        <section class="result-zone result-zone-hero">
+          <div class="result-hero-card">
+            <p class="result-hero-sub" id="resultHeroSub">iPad, 생각보다 가까워</p>
+            <p class="result-hero-big" id="resultHeroBig">2개월 먼저</p>
+            <p class="result-hero-meta" id="resultHeroMeta">지금 속도는 14개월, 위ish부스터는 12개월</p>
+          </div>
+        </section>
+
+        <section class="result-zone result-zone-mini">
+          <div class="mini-stat-row">
+            <div class="mini-stat-card">
+              <div class="mini-stat-val" id="miniGoal">RM 2,000</div>
+              <div class="mini-stat-lbl">목표 금액</div>
+            </div>
+            <div class="mini-stat-card">
+              <div class="mini-stat-val" id="miniSaved">2개월</div>
+              <div class="mini-stat-lbl">앞당긴 기간</div>
+            </div>
+            <div class="mini-stat-card">
+              <div class="mini-stat-val accent" id="miniLabor">3.8일</div>
+              <div class="mini-stat-lbl">알바 환산</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="result-zone result-zone-race">
+          <div class="card-soft purchase-race-card">
+            <div class="purchase-race-head">
+              <h2 class="purchase-race-title">위ish템 구매 레이스</h2>
+              <div class="purchase-race-mode">위ish부스터</div>
+            </div>
+
+            <div class="purchase-race-goal">
+              <div class="purchase-race-goal-left"><span>목표선</span><b id="raceGoalAmount">RM 2,000</b></div>
+              <div class="purchase-race-goal-right">🎁 구매 가능</div>
+            </div>
+
+            <div class="purchase-race-rows">
+              <div class="purchase-race-row">
+                <div class="purchase-race-row-meta">
+                  <span>일반저축</span>
+                  <span class="purchase-race-arrive" id="savingReachLabel">14개월 도착</span>
+                </div>
+                <div class="purchase-race-lane">
+                  <div class="purchase-race-lane-start" aria-hidden="true">🚀</div>
+                  <div class="purchase-race-lane-fill saving" id="savingFill"></div>
+                  <div class="purchase-race-lane-gift" aria-hidden="true">🎁</div>
+                </div>
+              </div>
+
+              <div class="purchase-race-row">
+                <div class="purchase-race-row-meta">
+                  <span>위ish부스터</span>
+                  <span class="purchase-race-arrive" id="growthReachLabel">12개월 도착</span>
+                </div>
+                <div class="purchase-race-lane">
+                  <div class="purchase-race-lane-start" aria-hidden="true">🚀</div>
+                  <div class="purchase-race-lane-fill growth" id="growthFill"></div>
+                  <div class="purchase-race-lane-gift" aria-hidden="true">🎁</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="purchase-race-insight" id="raceInsight">위ish부스터가 더 먼저 구매 가능선에 가까워져요.</div>
+          </div>
+        </section>
+
+        <section class="result-zone result-zone-footer">
+          <details class="calc-accordion card-soft">
+            <summary>계산 기준 보기</summary>
+            <div class="calc-accordion-body">
+              <div class="wage-row" id="wageRow">기준 시급 RM <span id="wageDisplay">8.72</span> <span class="chev">▼</span></div>
+            </div>
+          </details>
+          <div class="cta-seed-only">
+            <button class="btn-primary" id="btnSeedMoney">레이스 지원금 최대 RM50 받기</button>
+          </div>
+          <p class="result-footer-note">
+            본 결과는 확정 수익이나 투자 권유가 아니라, 저축과 루트별 도착 시뮬레이션 예시입니다. 실제 결과는 시장 상황에 따라 달라질 수 있습니다.
+          </p>
+        </section>
+      </div>
+
+      <div class="recommend-modal" id="recommendModal" aria-hidden="true">
+        <div class="recommend-panel" role="dialog" aria-modal="true" aria-labelledby="recommendTitle">
+          <div class="recommend-panel-head">
+            <small id="recommendTitle">추천 기준 선택</small>
+            <button class="recommend-close" id="closeRecommend" type="button" aria-label="추천 팝업 닫기">×</button>
+          </div>
+          <div class="recommend-options">
+            <button class="recommend-option" id="amountFirstBtn" type="button">
+              현금흐름 맞춤
+              <span>월 가능 금액을 쪼개서 무리 없는 주기를 추천해요.</span>
+            </button>
+            <button class="recommend-option" id="timelineFirstBtn" type="button">
+              수익성 우선
+              <span>목표 기간 안에 도달하도록 월초에 크게 넣는 루트를 추천해요.</span>
+            </button>
+          </div>
+          <p class="recommend-detail" id="recommendDetail">추천 기준을 선택해 주세요.</p>
+          <button class="recommend-apply" id="applyRecommend" type="button">적용하기</button>
+        </div>
+      </div>
+    </div>
+
+<!--PART4-->

@@ -1,0 +1,16 @@
+{
+  "name": "wishtem",
+  "version": "1.0.0",
+  "description": "위시템 시뮬레이션 — 퍼널 트래킹 웹사이트",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "assemble": "node scripts/assemble-index.js",
+    "build:share": "node scripts/build-share-html.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "googleapis": "^173.0.0"
+  }
+}

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>위시레이스 — 트래킹 대시보드</title>
+
+<style>
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+
+    background: #f5f5f5; color: #111; padding: 32px 24px 48px;
+
+    max-width: 960px; margin: 0 auto;
+
+  }
+
+  h1 { font-size: 24px; margin-bottom: 6px; }
+
+  .sub { color: #888; font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 28px; }
+
+  .card {
+
+    background: #fff; border-radius: 14px; padding: 18px 20px;
+
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+
+  }
+
+  .card .label { font-size: 13px; color: #888; margin-bottom: 6px; }
+
+  .card .value { font-size: 28px; font-weight: 700; }
+
+  .card .hint { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+  h2 { font-size: 17px; margin: 28px 0 14px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 8px; }
+
+  th, td { padding: 12px 16px; text-align: left; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
+
+  th { background: #fafafa; font-weight: 600; color: #555; }
+
+  tr:last-child td { border-bottom: none; }
+
+  .refresh { margin-bottom: 20px; }
+
+  .refresh button {
+
+    background: #111; color: #fff; border: none; border-radius: 10px;
+
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+
+  }
+
+  .event-tag {
+
+    display: inline-block; background: #f0f0f0; border-radius: 6px;
+
+    padding: 2px 8px; font-size: 12px; font-family: monospace;
+
+  }
+
+  a { color: #111; }
+
+  .note { font-size: 12px; color: #888; margin-bottom: 20px; line-height: 1.6; }
+
+</style>
+
+</head>
+
+<body>
+
+  <h1>위시레이스 트래킹 대시보드</h1>
+
+  <p class="sub">멘토링 핵심 6대 로그 · 3단계 퍼널 · CPA · 바이럴 · <a href="/">← 시뮬레이션으로</a></p>
+
+
+
+  <div class="refresh"><button onclick="load()">새로고침</button></div>
+
+
+
+  <div class="grid" id="metricCards"></div>
+
+
+
+  <h2>멘토링 핵심 6대 로그</h2>
+
+  <p class="note">제안서·CPA·바이럴 증명용 — 커서 세팅 기준 이벤트</p>
+
+  <table id="coreSixTable">
+
+    <thead><tr><th>이벤트</th><th>설명</th><th>건수</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+  <h2>퍼널 3단계 (완료율 · 이탈 측정)</h2>
+
+  <p class="note">광고 유입 → 비교하기 → 결과 완료. 단계별 이탈(drop-off)로 어디서 끊기는지 확인</p>
+
+  <table id="coreFunnelTable">
+
+    <thead><tr><th>단계</th><th>이벤트</th><th>건수</th><th>이전 대비</th><th>유입 대비</th><th>이탈</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+  <h2>수익률 탭 클릭 분포 (인식 변화 검증)</h2>
+
+  <table id="tabTable">
+
+    <thead><tr><th>탭</th><th>클릭 수</th><th>비율</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+  <h2>공유 버튼 클릭 (source별 · Viral)</h2>
+
+  <table id="shareTable">
+
+    <thead><tr><th>source</th><th>클릭 수</th><th>비율</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+  <h2>전체 수집 이벤트 (클릭·화면·전환)</h2>
+  <p class="note">멘토링 6대 로그 외 확장 이벤트 포함 — 건수 0인 항목은 표시되지 않음</p>
+  <table id="allEventsTable">
+    <thead><tr><th>이벤트</th><th>건수</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>상세 퍼널 (화면별 · s5~연락처)</h2>
+
+  <table id="funnelTable">
+
+    <thead><tr><th>단계</th><th>이벤트</th><th>건수</th><th>이전 대비</th><th>유입 대비</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+  <h2>최근 이벤트</h2>
+
+  <table id="recentTable">
+
+    <thead><tr><th>시간</th><th>이벤트</th><th>세션</th><th>페이로드</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+  <h2>최근 연락처 (진성 유저 · CPA)</h2>
+
+  <table id="contactTable">
+
+    <thead><tr><th>시간</th><th>이메일</th><th>전화/WhatsApp</th><th>위시템</th><th>목표금액</th></tr></thead>
+
+    <tbody></tbody>
+
+  </table>
+
+
+
+<script>
+
+async function load() {
+
+  const [funnel, recent] = await Promise.all([
+
+    fetch('/api/stats/funnel').then(r => r.json()),
+
+    fetch('/api/stats/recent').then(r => r.json()),
+
+  ]);
+
+
+
+  const m = funnel.metrics;
+
+  const cards = [
+
+    { label: '총 유입 (page_view)', value: funnel.events.page_view, hint: `방문자 ${funnel.unique_visitors} · 세션 ${funnel.unique_sessions}` },
+
+    { label: '결과 완료율', value: m.result_completion_rate, hint: 'view_results / page_view' },
+
+    { label: 'CPA — 가입 대기 신청률', value: m.cpa_signup_rate, hint: `${funnel.events.submit_contact} / ${funnel.events.page_view}` },
+
+    { label: '레이스 지원금 CTA', value: m.seed_money_clicks, hint: 'click_seed_money' },
+
+    { label: '공유 클릭 (Viral)', value: m.share_clicks, hint: 'click_share' },
+
+    { label: '수익률 탭 클릭', value: funnel.events.click_rate_tab, hint: 'click_rate_tab' },
+
+  ];
+
+  document.getElementById('metricCards').innerHTML = cards.map(c => `
+
+    <div class="card">
+
+      <div class="label">${c.label}</div>
+
+      <div class="value">${c.value}</div>
+
+      <div class="hint">${c.hint}</div>
+
+    </div>
+
+  `).join('');
+
+
+
+  const coreSixBody = document.querySelector('#coreSixTable tbody');
+
+  coreSixBody.innerHTML = (funnel.core_six || []).map(row => `
+
+    <tr>
+
+      <td><span class="event-tag">${row.event}</span></td>
+
+      <td>${row.label}</td>
+
+      <td><b>${row.count}</b></td>
+
+    </tr>
+
+  `).join('');
+
+
+
+  const coreFunnelBody = document.querySelector('#coreFunnelTable tbody');
+
+  coreFunnelBody.innerHTML = (funnel.core_funnel || []).map(row => `
+
+    <tr>
+
+      <td>${row.step}. ${row.label}</td>
+
+      <td><span class="event-tag">${row.event}</span></td>
+
+      <td><b>${row.count}</b></td>
+
+      <td>${row.conversion_from_prev}</td>
+
+      <td>${row.conversion_from_top}</td>
+
+      <td>${row.drop_off > 0 ? `<span style="color:#c44">-${row.drop_off}</span>` : '—'}</td>
+
+    </tr>
+
+  `).join('');
+
+
+
+  const allEventsBody = document.querySelector('#allEventsTable tbody');
+  allEventsBody.innerHTML = (funnel.all_events || []).length
+    ? funnel.all_events.map(r => `
+    <tr>
+      <td><span class="event-tag">${r.event}</span></td>
+      <td><b>${r.count}</b></td>
+    </tr>
+  `).join('')
+    : '<tr><td colspan="2" style="color:#aaa">아직 데이터 없음</td></tr>';
+
+
+
+  const funnelBody = document.querySelector('#funnelTable tbody');
+
+  funnelBody.innerHTML = funnel.funnel.map(row => `
+
+    <tr>
+
+      <td>${row.step}. ${row.label}</td>
+
+      <td><span class="event-tag">${row.event}</span></td>
+
+      <td><b>${row.count}</b></td>
+
+      <td>${row.conversion_from_prev}</td>
+
+      <td>${row.conversion_from_top}</td>
+
+    </tr>
+
+  `).join('');
+
+
+
+  const totalTabs = funnel.rate_tab_breakdown.reduce((s, r) => s + r.cnt, 0) || 1;
+
+  const tabBody = document.querySelector('#tabTable tbody');
+
+  tabBody.innerHTML = funnel.rate_tab_breakdown.length
+
+    ? funnel.rate_tab_breakdown.map(r => `
+
+      <tr>
+
+        <td>${r.tab || '(unknown)'}</td>
+
+        <td>${r.cnt}</td>
+
+        <td>${((r.cnt / totalTabs) * 100).toFixed(1)}%</td>
+
+      </tr>
+
+    `).join('')
+
+    : '<tr><td colspan="3" style="color:#aaa">아직 데이터 없음 (결과 페이지에서 수익률 탭 클릭 필요)</td></tr>';
+
+
+
+  const totalShares = (funnel.share_breakdown || []).reduce((s, r) => s + r.cnt, 0) || 1;
+
+  const shareBody = document.querySelector('#shareTable tbody');
+
+  shareBody.innerHTML = (funnel.share_breakdown || []).length
+
+    ? funnel.share_breakdown.map(r => `
+
+      <tr>
+
+        <td><span class="event-tag">${r.source}</span></td>
+
+        <td>${r.cnt}</td>
+
+        <td>${((r.cnt / totalShares) * 100).toFixed(1)}%</td>
+
+      </tr>
+
+    `).join('')
+
+    : '<tr><td colspan="3" style="color:#aaa">아직 데이터 없음</td></tr>';
+
+
+
+  const recentBody = document.querySelector('#recentTable tbody');
+
+  recentBody.innerHTML = recent.events.slice(0, 20).map(e => `
+
+    <tr>
+
+      <td>${e.created_at}</td>
+
+      <td><span class="event-tag">${e.event_type}</span></td>
+
+      <td style="font-size:11px;color:#aaa">${e.session_id.slice(0,8)}…</td>
+
+      <td style="font-size:12px;color:#666">${e.payload ? JSON.stringify(e.payload) : '—'}</td>
+
+    </tr>
+
+  `).join('') || '<tr><td colspan="4" style="color:#aaa">아직 데이터 없음</td></tr>';
+
+
+
+  const contactBody = document.querySelector('#contactTable tbody');
+
+  contactBody.innerHTML = recent.contacts.map(c => `
+
+    <tr>
+
+      <td>${c.created_at}</td>
+
+      <td>${c.email || '—'}</td>
+
+      <td>${c.phone || '—'}</td>
+
+      <td>${c.wish_item || '—'}</td>
+
+      <td>${c.goal_amount || '—'}</td>
+
+    </tr>
+
+  `).join('') || '<tr><td colspan="5" style="color:#aaa">아직 데이터 없음</td></tr>';
+
+}
+
+
+
+load();
+
+setInterval(load, 15000);
+
+</script>
+
+</body>
+
+</html>
+
+

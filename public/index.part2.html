@@ -1,0 +1,93 @@
+
+    <div class="screen" id="loading">
+      <div class="loading-pad">
+        <div class="loading-card">
+          <div class="loading-badge">Wish D-Day 계산 중</div>
+          <div class="loading-spinner" aria-hidden="true"></div>
+          <div class="loading-title">도착일 계산 중...</div>
+          <p class="loading-caption" id="loadingCaption">현재 저축 속도 분석 중</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen" id="s3">
+      <div class="scr-pad scr-scroll result-scroll" id="resultBody">
+        <div class="nav-back" data-back="2"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <section class="result-zone result-zone-route">
+          <span class="route-eyebrow">✨ 위ish레이스 챌린지</span>
+          <h2 class="route-heading">위ish템 플랜이 준비됐어!</h2>
+          <p class="route-lead">목표를 기준으로 위ish템에 도달하는 두 가지 방법을 계산했어</p>
+
+          <div class="wish-card wish-goal-card card-soft">
+            <div class="wish-goal-row">
+              <div>
+                <small>내 위ish템</small>
+                <strong id="routeItemName">아이패드</strong>
+              </div>
+              <label class="route-field route-price-input" aria-label="위ish템 가격">
+                <span>RM</span>
+                <input id="routePriceInput" class="route-input-muted" inputmode="decimal" type="text" autocomplete="off" value="2000">
+              </label>
+            </div>
+            <div class="wish-goal-row">
+              <div>
+                <small>목표 도달기간</small>
+                <strong id="routeTargetDaysLabel">365일</strong>
+              </div>
+              <label class="route-field" aria-label="목표 도달기간">
+                <input id="routeTargetDaysInput" class="route-input-muted" inputmode="numeric" type="text" autocomplete="off" value="365">
+                <span>일</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="route-chart-wrap card-soft">
+            <div class="route-chart-head">
+              <div class="route-chart-title">일반 저축 vs 위ish부스터</div>
+              <div class="route-legend" id="routeLegend">
+                <span><i class="route-dot"></i>일반 저축</span>
+                <span><i class="route-dot orange"></i>위ish부스터</span>
+              </div>
+            </div>
+            <div class="route-tooltip-box" id="routeTooltip" role="status" aria-live="polite"></div>
+            <svg id="routeChart" viewBox="0 0 318 230" role="img" aria-label="저축과 위ish부스터 비교 그래프">
+              <g id="routeGrid"></g>
+              <g id="routeLines"></g>
+              <g id="routePins"></g>
+              <g id="routeMarker"></g>
+              <rect class="route-hit" x="0" y="0" width="318" height="230"></rect>
+            </svg>
+            <div class="route-control-row" aria-label="그래프 설정">
+              <label class="route-field">
+                <input id="routeYearsInput" inputmode="numeric" type="text" autocomplete="off" value="5" aria-label="그래프 표시 기간">
+                <span>년</span>
+              </label>
+              <div class="route-select-wrap">
+                <button class="route-chip" id="routeCycleBtn" type="button">매주</button>
+                <div class="route-cycle-menu" id="routeCycleMenu"></div>
+              </div>
+              <label class="route-field">
+                <span>월 RM</span>
+                <input id="routeAmountInput" inputmode="numeric" type="text" autocomplete="off" value="150" aria-label="월 투자 가능 금액">
+              </label>
+              <button class="route-add-btn" id="routeAddRoute" type="button">비교하기</button>
+            </div>
+            <p class="route-data-note">기준: 일반 저축은 연 3%, 위ish부스터는 원금 잔액에 일 1.6% 단리로 계산</p>
+          </div>
+
+          <div class="route-diagnosis">
+            <div class="route-mini-card">
+              <small>위ish레이스 도달 가능성</small>
+              <strong id="routeChanceMain">--%</strong>
+              <small>예상</small>
+            </div>
+            <button class="route-mini-card route-recommend-card" id="routeRecommendCard" type="button">
+              <span class="route-recommend-badge">추천 레이스</span>
+              <strong id="routeRecommend">RM 50</strong>
+              <small id="routeRecommendMeta">매주</small>
+            </button>
+          </div>
+        </section>
+
+<!--PART3-->

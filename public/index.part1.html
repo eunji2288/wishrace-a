@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>위시레이스 위시템 챌린지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="screens-wrap" id="screensWrap">
+
+    <div class="screen active" id="s1">
+      <div class="page-layout layout-landing">
+        <header class="layout-top">
+          <div class="eyebrow">✨ 위시레이스 위시템 챌린지</div>
+          <div class="h-title">지금 네 머릿속에<br>맴도는 그거.</div>
+          <div class="h-sub">갖고 싶은 걸 입력하면 지금 속도로 언제 살 수 있는지,<br>얼마나 앞당길 수 있는지 계산해줄게</div>
+        </header>
+        <div class="hero-visual">
+          <button type="button" class="hero-visual-btn" id="s1Circle" aria-label="챌린지 시작">
+            <img src="/images/s1-cover.png" alt="위시레이스 챌린지 — 목표 아이템을 향한 과녁" class="hero-visual-img" />
+          </button>
+        </div>
+        <div class="layout-bottom">
+          <button class="btn-primary" id="toS2">내 위시템 레이스 시작하기</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen" id="s2">
+      <div class="page-layout layout-input">
+        <header class="layout-top layout-top-input">
+          <div class="nav-back" data-back="1"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="h-title layout-title">요즘 갖고 싶은 게 뭐야?</div>
+        </header>
+        <div class="layout-card input-card">
+          <div class="input-card-body">
+            <div class="field-block">
+              <div class="field-label">사고 싶은 위시템</div>
+              <input class="field-input" id="itemInput" type="text" placeholder="예: iPad" />
+            </div>
+            <div class="field-block s2-amount-block">
+              <div class="grid2 s2-amount-row">
+                <div>
+                  <div class="field-label">목표 금액</div>
+                  <input class="field-input" id="amountInput" type="text" inputmode="decimal" autocomplete="off" placeholder="2000" />
+                </div>
+                <div>
+                  <div class="field-label">정기적으로 모을 수 있는 금액</div>
+                  <input class="field-input" id="depositInput" type="text" inputmode="decimal" autocomplete="off" placeholder="150" />
+                </div>
+              </div>
+              <p class="field-currency-note">RM 기준</p>
+            </div>
+            <div class="field-block">
+              <div class="field-label">목표 기간</div>
+              <div class="period-grid" id="periodGrid">
+                <button type="button" class="period-btn" data-months="3">3개월 안에</button>
+                <button type="button" class="period-btn" data-months="6">6개월 안에</button>
+                <button type="button" class="period-btn selected" data-months="12">1년 안에</button>
+                <button type="button" class="period-btn" data-months="60">언젠가 꼭</button>
+              </div>
+            </div>
+            <div class="tip-card input-tip"><span>🎁</span><span>챌린지 완료 시, 첫 레이스 지원금 <b>최대 RM 50</b> 즉시 매칭!</span></div>
+          </div>
+        </div>
+        <div class="layout-bottom layout-bottom-input">
+          <button class="btn-primary" id="toS3">내 위ish템 레이스 확인하기</button>
+        </div>
+      </div>
+    </div>
+
+<!--PART2-->
