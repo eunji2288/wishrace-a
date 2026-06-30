@@ -1938,6 +1938,74 @@ button, input, textarea, select {
 }
 .route-years-step.up .route-years-step-icon { border-bottom: 5px solid currentColor; }
 .route-years-step.down .route-years-step-icon { border-top: 5px solid currentColor; }
+.route-amount-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  vertical-align: middle;
+}
+.route-amount-field {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.route-amount-field input {
+  width: 72px;
+}
+.route-amount-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 10px);
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: #fff7ed;
+  border: 1.5px solid var(--logup-orange);
+  color: var(--logup-orange-dark);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.3;
+  white-space: nowrap;
+  box-shadow: 0 6px 14px rgba(255, 122, 0, 0.16);
+  animation: routeAmountHintPulse 1.6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+.route-amount-hint.is-hidden { display: none; }
+@keyframes routeAmountHintPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 6px 14px rgba(255, 122, 0, 0.16);
+  }
+  50% {
+    opacity: 0.92;
+    transform: translateX(-50%) scale(1.03);
+    box-shadow: 0 8px 18px rgba(255, 122, 0, 0.28);
+  }
+}
+.route-amount-step {
+  border: 1.5px solid var(--logup-line);
+  background: var(--logup-gray-light);
+  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.route-amount-step:hover:not(:disabled) {
+  border-color: var(--logup-orange);
+  color: var(--logup-orange-dark);
+  background: #fff;
+}
+.route-amount-step:disabled { opacity: 0.35; cursor: default; }
 .route-amount-unit {
   font-size: 14px;
   font-weight: 800;
@@ -2204,9 +2272,14 @@ button, input, textarea, select {
                   <div class="route-cycle-menu" id="routeCycleMenu"></div>
                 </div>
                 I'll save RM
-                <label class="route-inline-field">
-                  <input id="routeAmountInput" inputmode="numeric" type="text" autocomplete="off" value="150" aria-label="Weekly savings amount">
-                </label>
+                <span class="route-amount-control">
+                  <span class="route-amount-hint" id="routeAmountHint">💡 Tweak the amount to reach your goal faster!</span>
+                  <button type="button" class="route-amount-step" id="routeAmountStepDown" aria-label="Decrease savings amount">−</button>
+                  <label class="route-inline-field route-amount-field">
+                    <input id="routeAmountInput" inputmode="numeric" type="text" autocomplete="off" value="150" aria-label="Weekly savings amount">
+                  </label>
+                  <button type="button" class="route-amount-step" id="routeAmountStepUp" aria-label="Increase savings amount">+</button>
+                </span>
                 every
                 <span class="route-amount-unit" id="routeAmountUnit">week</span>
                 .
@@ -2382,12 +2455,37 @@ button, input, textarea, select {
 (function () {
   const STORAGE_KEY = 'wishfast_events';
   const CONTACTS_KEY = 'wishfast_contacts';
+  const MARKETING_SOURCE_KEY = 'wishfast_marketing_source';
 
   function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
       return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
     });
+  }
+
+  function captureMarketingSource() {
+    try {
+      const fromUrl = new URLSearchParams(location.search).get('source');
+      if (fromUrl) {
+        const normalized = fromUrl.toLowerCase().trim();
+        sessionStorage.setItem(MARKETING_SOURCE_KEY, normalized);
+        return normalized;
+      }
+    } catch (_) {}
+    return sessionStorage.getItem(MARKETING_SOURCE_KEY) || null;
+  }
+
+  function buildPayload(eventType, payload) {
+    const base = { ...(payload || {}) };
+    if (
+      marketingSource &&
+      (eventType === 'page_view' || eventType === 'submit_contact') &&
+      base.source == null
+    ) {
+      base.source = marketingSource;
+    }
+    return Object.keys(base).length ? base : null;
   }
 
   function getVisitorId() {
@@ -2408,6 +2506,7 @@ button, input, textarea, select {
     return id;
   }
 
+  const marketingSource = captureMarketingSource();
   const visitorId = getVisitorId();
   const sessionId = getSessionId();
   const fired = new Set();
@@ -2434,21 +2533,26 @@ button, input, textarea, select {
       event_type: eventType,
       session_id: sessionId,
       visitor_id: visitorId,
-      payload: payload || null,
+      source: marketingSource || null,
+      payload: buildPayload(eventType, payload),
       created_at: new Date().toISOString(),
     };
 
     persistEvent(record);
 
     try {
-      await fetch('/api/events', {
+      const res = await fetch('/api/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(record),
         keepalive: true,
       });
-    } catch {
-      /* localStorage primary */
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.warn('[WishFast Track API]', eventType, res.status, err.error || res.statusText);
+      }
+    } catch (e) {
+      console.warn('[WishFast Track API]', eventType, 'network error', e);
     }
   }
 
@@ -2464,6 +2568,7 @@ button, input, textarea, select {
       ...data,
       session_id: sessionId,
       visitor_id: visitorId,
+      source: marketingSource || null,
       created_at: new Date().toISOString(),
     };
 
@@ -2501,6 +2606,7 @@ button, input, textarea, select {
   window.WishFastTracker = {
     sessionId,
     visitorId,
+    marketingSource,
     track,
     trackOnce,
     submitContact,
@@ -2511,6 +2617,7 @@ button, input, textarea, select {
     referrer: document.referrer || null,
     path: location.pathname,
     brand: 'WishRace',
+    source: marketingSource || null,
   });
 })();
 
@@ -3209,6 +3316,38 @@ button, input, textarea, select {
     el.value = String(state.amount);
   }
 
+  function hideAmountHint() {
+    $('routeAmountHint')?.classList.add('is-hidden');
+  }
+
+  function amountStepDelta() {
+    const amount = state.amount || 150;
+    if (amount >= 500) return 50;
+    if (amount >= 100) return 25;
+    return 10;
+  }
+
+  function updateAmountStepperState() {
+    const down = $('routeAmountStepDown');
+    if (down) down.disabled = state.amount <= 1;
+  }
+
+  function applyAmountValue(nextAmount, source = 'unknown') {
+    const previousAmount = state.amount;
+    state.amount = Math.min(999999999, Math.max(1, Math.round(nextAmount)));
+    activeRecommendationMode = null;
+    pendingRecommendation = null;
+    closeMenus();
+    const el = $('routeAmountInput');
+    if (el) el.value = String(state.amount);
+    hideAmountHint();
+    updateAmountStepperState();
+    if (state.amount !== previousAmount) {
+      trackInputAmountChanged(source, previousAmount);
+    }
+    render();
+  }
+
   function trackInputAmountChanged(source, previousAmount) {
     window.WishFastTracker?.track('input_amount_changed', {
       value: state.amount,
@@ -3217,6 +3356,14 @@ button, input, textarea, select {
       cycle: state.cycle,
       item: state.item,
     });
+  }
+
+  function stepAmountInput(delta) {
+    commitAmountInput();
+    applyAmountValue(
+      state.amount + delta * amountStepDelta(),
+      delta > 0 ? 'step_up' : 'step_down'
+    );
   }
 
   function commitYearsInput(fallback = state.years || DEFAULT_CHART_YEARS) {
@@ -4117,6 +4264,7 @@ button, input, textarea, select {
     }
 
     updateYearsStepperState();
+    updateAmountStepperState();
     emitUpdate(snapshot);
   }
 
@@ -4220,7 +4368,11 @@ button, input, textarea, select {
       commitWageInput();
       render();
     });
+    $('routeAmountInput')?.addEventListener('focus', hideAmountHint);
+    $('routeAmountInput')?.addEventListener('pointerenter', hideAmountHint);
+    $('routeAmountInput')?.addEventListener('touchstart', hideAmountHint, { passive: true });
     $('routeAmountInput')?.addEventListener('input', () => {
+      hideAmountHint();
       activeRecommendationMode = null;
       pendingRecommendation = null;
       closeMenus();
@@ -4231,6 +4383,7 @@ button, input, textarea, select {
       if (!Number.isFinite(num) || num <= 0) return;
       const previousAmount = state.amount;
       state.amount = Math.min(999999999, Math.round(num));
+      updateAmountStepperState();
       if (state.amount !== previousAmount) {
         trackInputAmountChanged('input', previousAmount);
       }
@@ -4238,7 +4391,16 @@ button, input, textarea, select {
     });
     $('routeAmountInput')?.addEventListener('blur', () => {
       commitAmountInput();
+      updateAmountStepperState();
       render();
+    });
+    $('routeAmountStepUp')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      stepAmountInput(1);
+    });
+    $('routeAmountStepDown')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      stepAmountInput(-1);
     });
 
     $('routeCycleBtn')?.addEventListener('click', (event) => {
@@ -4527,6 +4689,7 @@ button, input, textarea, select {
     resultEl.style.transform = 'translateX(0)';
     resultEl.classList.add('active', 'result-fade-in');
     current = 's3';
+    // s3 stay timer (s3EnteredAt) starts here after loading sequence — same timing as A
     trackScreenView('s3');
     requestAnimationFrame(() => {
       renderResults();
@@ -5105,8 +5268,8 @@ button, input, textarea, select {
   });
 
   document.querySelector('.calc-accordion')?.addEventListener('toggle', (event) => {
-    if (event.target.open) {
-      WishFastTracker.track('click_calc_accordion', { open: true });
+    if (event.target?.open) {
+      window.WishFastTracker?.track('click_calc_accordion', { open: true });
     }
   });
 
