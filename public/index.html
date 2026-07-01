@@ -880,6 +880,30 @@ button, input, textarea, select {
   letter-spacing: var(--tracking-tight);
 }
 
+#sPersonalityPopup {
+  background-color: #ffffff !important;
+  z-index: 9999 !important;
+  position: fixed !important;
+  top: 0; left: 0; width: 100%; height: 100%;
+  overflow-y: auto;
+  transform: none !important;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+#sPersonalityPopup.active {
+  display: flex;
+}
+#sPersonalityPopup .personality-popup-inner {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 32px 22px 40px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 /* Safety confirmation (s5) */
 #s5 { background: #f5f6f8; }
 .safety-scroll {
@@ -2343,6 +2367,15 @@ button, input, textarea, select {
           <button class="btn-primary" id="toContact">Open linked account &<br>claim up to RM 50</button>
           <p class="s4-fineprint">⚠️ This boost can only be withdrawn after you complete the WishRace challenge.</p>
         </div>
+      </div>
+    </div>
+
+    <div id="sPersonalityPopup" class="screen" aria-hidden="true" role="dialog" aria-labelledby="personalityTitle">
+      <div class="personality-popup-inner">
+        <div class="s4-icon" id="personalityIcon">🔮</div>
+        <div class="s4-title" id="personalityTitle" style="font-size:22px; font-weight:800; margin-bottom:10px;">Analysis Complete</div>
+        <div class="complete-sub" id="personalityDesc" style="text-align:center; margin-bottom:24px; font-size:14px; line-height:1.6; color:#6B7280;"></div>
+        <button class="btn-primary" id="btnClosePersonality" type="button">See my WishRace detailed report</button>
       </div>
     </div>
 
@@ -4680,6 +4713,48 @@ button, input, textarea, select {
     }, 2100);
   }
 
+  function showPersonalityPopup() {
+    const loadingEl = $('loading');
+    if (loadingEl) {
+      loadingEl.classList.remove('active');
+      loadingEl.style.transform = 'translateX(-100%)';
+    }
+
+    const monthlyDeposit = state.depositAmount;
+    const targetMonths = state.targetMonths;
+    const targetAmount = Math.max(1, state.targetAmount);
+    const pureRatio = ((monthlyDeposit * targetMonths) / targetAmount) * 100;
+
+    let icon;
+    let title;
+    let desc;
+    if (pureRatio < 10) {
+      icon = '🚀';
+      title = 'The Impossible Dreamer 🚀';
+      desc = 'Aiming for the stars? Let\'s bring that goal a bit closer to earth. 🌍';
+    } else if (pureRatio < 85) {
+      icon = '🛍️';
+      title = 'The Add-To-Cart Dreamer 🛒';
+      desc = 'Your Shopee cart is ready, but your savings need a little boost! 🐢';
+    } else {
+      icon = '🧠';
+      title = 'Lowkey Financial Genius 🧠';
+      desc = 'Solid plan right here! Let\'s fast-forward to your wish day. ⚡';
+    }
+
+    const iconEl = $('personalityIcon');
+    const titleEl = $('personalityTitle');
+    const descEl = $('personalityDesc');
+    const popup = $('sPersonalityPopup');
+    if (iconEl) iconEl.textContent = icon;
+    if (titleEl) titleEl.textContent = title;
+    if (descEl) descEl.textContent = desc;
+    if (popup) {
+      popup.classList.add('active');
+      popup.setAttribute('aria-hidden', 'false');
+    }
+  }
+
   function showResultScreen() {
     const loadingEl = $('loading');
     const resultEl = $('s3');
@@ -5130,7 +5205,16 @@ button, input, textarea, select {
     $('loadingCaption').style.opacity = '1';
     $('s3').classList.remove('result-fade-in');
     goTo('loading');
-    runLoadingSequence(showResultScreen);
+    runLoadingSequence(showPersonalityPopup);
+  });
+
+  $('btnClosePersonality')?.addEventListener('click', () => {
+    const popup = $('sPersonalityPopup');
+    if (popup) {
+      popup.classList.remove('active');
+      popup.setAttribute('aria-hidden', 'true');
+    }
+    showResultScreen();
   });
 
   $('btnSeedMoney').addEventListener('click', () => {
@@ -5255,6 +5339,8 @@ button, input, textarea, select {
       setPeriodMonths(12);
       $('s3').classList.remove('result-fade-in');
       $('loading').classList.remove('active');
+      $('sPersonalityPopup')?.classList.remove('active');
+      $('sPersonalityPopup')?.setAttribute('aria-hidden', 'true');
       riskBox?.classList.remove('checked');
       toSafetyConfirmBtn.disabled = true;
       btnSubmitContact.disabled = true;
