@@ -5,11 +5,36 @@ const sheets = require('./lib/google-sheets');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const PUBLIC_DIR = path.join(__dirname, 'public');
+const INDEX_HTML = path.join(PUBLIC_DIR, 'index.html');
+const INDEX_EN_HTML = path.join(PUBLIC_DIR, 'index-en.html');
+const ADMIN_HTML = path.join(PUBLIC_DIR, 'admin.html');
 const DATA_DIR = path.join(__dirname, 'data');
 const EVENTS_FILE = path.join(DATA_DIR, 'events.json');
 const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');
 
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+
+function sendPublicHtml(res, filePath, label) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`[Static] Missing ${label}: ${filePath}`);
+    return res.status(404).type('text/plain').send(`Not Found: ${label} is missing on the server`);
+  }
+  return res.sendFile(filePath);
+}
+
+function logPublicDirStatus() {
+  console.log('[Static] PUBLIC_DIR =', PUBLIC_DIR);
+  for (const [name, filePath] of [
+    ['index.html (B)', INDEX_HTML],
+    ['index-en.html (A)', INDEX_EN_HTML],
+    ['admin.html', ADMIN_HTML],
+  ]) {
+    const ok = fs.existsSync(filePath);
+    const size = ok ? fs.statSync(filePath).size : 0;
+    console.log(`[Static] ${name}: ${ok ? 'OK' : 'MISSING'}${ok ? ` (${size} bytes)` : ''}`);
+  }
+}
 
 function readJson(file) {
   try {
@@ -72,7 +97,29 @@ const VALID_EVENTS = new Set([
 ]);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/health', (_req, res) => {
+  res.json({
+    ok: true,
+    public_dir: PUBLIC_DIR,
+    files: {
+      index: fs.existsSync(INDEX_HTML),
+      index_en: fs.existsSync(INDEX_EN_HTML),
+      admin: fs.existsSync(ADMIN_HTML),
+    },
+  });
+});
+
+app.get('/', (_req, res) => sendPublicHtml(res, INDEX_HTML, 'index.html (B variant)'));
+app.get('/index-en.html', (_req, res) => sendPublicHtml(res, INDEX_EN_HTML, 'index-en.html (A variant)'));
+
+app.use(
+  express.static(PUBLIC_DIR, {
+    index: false,
+    extensions: ['html'],
+    fallthrough: true,
+  })
+);
 
 app.post('/api/events', (req, res) => {
   const { event_type, session_id, visitor_id, payload, source } = req.body || {};
@@ -277,13 +324,19 @@ app.get('/api/stats/recent', (_req, res) => {
   res.json({ events, contacts });
 });
 
-app.get('/admin', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+app.get('/admin', (_req, res) => sendPublicHtml(res, ADMIN_HTML, 'admin.html'));
+
+app.use((_req, res) => {
+  res.status(404).type('text/plain').send('Not Found');
 });
 
-app.listen(PORT, () => {
-  console.log(`Wishtem running at http://localhost:${PORT}`);
-  console.log(`Admin dashboard: http://localhost:${PORT}/admin`);
+app.listen(PORT, '0.0.0.0', () => {
+  logPublicDirStatus();
+  console.log(`Wishtem running at http://0.0.0.0:${PORT}`);
+  console.log(`B variant:  http://0.0.0.0:${PORT}/`);
+  console.log(`A variant:  http://0.0.0.0:${PORT}/index-en.html`);
+  console.log(`Admin dashboard: http://0.0.0.0:${PORT}/admin`);
+  console.log(`Health check: http://0.0.0.0:${PORT}/health`);
   console.log(`Tracking API: ${VALID_EVENTS.size} accepted event types`);
   sheets.logStartupStatus();
 });
