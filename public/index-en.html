@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- 위시레이스 디자인 공유용 단일 HTML (오프라인·file:// 열기 가능)
-     CSS / JS / 히어로 이미지 인라인 · 한글 UTF-8
-     트래킹: LocalStorage wishfast_events / wishfast_contacts
-     서버(node server.js) 실행 시 /api/events · /api/contacts 로도 전송 -->
+<!-- WishRace design share — single offline HTML
+     Inline CSS / JS / hero image · UTF-8
+     Tracking: LocalStorage wishfast_events / wishfast_contacts
+     With node server.js: also posts to /api/events · /api/contacts -->
 
 <html lang="en">
 <head>
@@ -766,7 +766,7 @@ button, input, textarea, select {
   text-align: center;
 }
 
-/* 6단계: 사전 예약 완료 */
+/* Step 6: pre-registration complete */
 #sComplete { background: #f5f6f8; }
 .complete-pad {
   justify-content: flex-start;
@@ -1506,7 +1506,7 @@ button, input, textarea, select {
 
 /* ── Route chart (s3 top) ── */
 #s3.screen {
-  /* .screen의 position:absolute 유지 — relative로 덮어쓰면 높이가 붕괴됨 */
+  /* Keep .screen position:absolute — relative override collapses height */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1647,14 +1647,14 @@ button, input, textarea, select {
 }
 #routePins { pointer-events: none; }
 
-/* 회색 — 단순 원형 마커 */
+/* Grey — simple circle marker */
 .route-arrival-pin.saving .route-pin-dot {
   fill: #9ca3ad;
   stroke: #fff;
   stroke-width: 2.5;
 }
 
-/* 주황 — 과녁형 마커 */
+/* Orange — bullseye marker */
 .route-pin-target-ring {
   fill: #fff;
   stroke: none;
@@ -2301,7 +2301,7 @@ button, input, textarea, select {
               <div class="purchase-race-row">
                 <div class="purchase-race-row-meta">
                   <span>Regular saving</span>
-                  <span class="purchase-race-arrive" id="savingReachLabel">390일 주행 (내 노동 100% 필요)</span>
+                  <span class="purchase-race-arrive" id="savingReachLabel">390-day run (100% your hustle)</span>
                 </div>
                 <div class="purchase-race-lane">
                   <div class="purchase-race-lane-start" aria-hidden="true">🚀</div>
@@ -2313,7 +2313,7 @@ button, input, textarea, select {
               <div class="purchase-race-row">
                 <div class="purchase-race-row-meta">
                   <span>WishBooster</span>
-                  <span class="purchase-race-arrive" id="growthReachLabel">360일 도착 (부스터가 26시간 대신 뛰어줌 🚀)</span>
+                  <span class="purchase-race-arrive" id="growthReachLabel">360-day arrival (booster runs 26 hrs for you 🚀)</span>
                 </div>
                 <div class="purchase-race-lane">
                   <div class="purchase-race-lane-start" aria-hidden="true">🚀</div>
@@ -2327,8 +2327,8 @@ button, input, textarea, select {
           <div class="route-chart-wrap card-soft">
             <div class="goal-chart-hero" id="goalChartHero">
               <div class="goal-chart-hero-emoji" aria-hidden="true">🎉</div>
-              <p class="goal-chart-hero-title" id="goalChartHeroTitle">일반 저축보다 26시간 더 빨리 iPad 구매 완료!</p>
-              <p class="goal-chart-hero-item" id="goalChartHeroItem"><span id="goalChartItemIcon">🎯</span> <span id="goalChartItemName">위시템</span></p>
+              <p class="goal-chart-hero-title" id="goalChartHeroTitle">Buy your iPad 26 hrs sooner than regular saving!</p>
+              <p class="goal-chart-hero-item" id="goalChartHeroItem"><span id="goalChartItemIcon">🎯</span> <span id="goalChartItemName">WishItem</span></p>
             </div>
             <div class="route-chart-head">
               <div class="route-chart-head-left">
@@ -2338,11 +2338,11 @@ button, input, textarea, select {
                   <span><i class="route-dot orange"></i>WishBooster 🚀 (current goal)</span>
                 </div>
               </div>
-              <button type="button" class="route-chart-info-btn" id="routeChartInfoBtn" aria-label="계산 기준 안내" aria-expanded="false" aria-controls="routeChartInfoPopover">ⓘ</button>
-              <div class="route-chart-info-popover" id="routeChartInfoPopover" role="tooltip">기준: 일반 저축은 연 3%, 위시부스터는 원금 잔액에 월 1.6% 복리(연 20.98%)로 계산</div>
+              <button type="button" class="route-chart-info-btn" id="routeChartInfoBtn" aria-label="Calculation assumptions" aria-expanded="false" aria-controls="routeChartInfoPopover">ⓘ</button>
+              <div class="route-chart-info-popover" id="routeChartInfoPopover" role="tooltip">Assumptions: regular saving 3% p.a.; WishBooster 1.6% monthly compound on principal balance (20.98% p.a.)</div>
             </div>
             <div class="route-tooltip-box" id="routeTooltip" role="status" aria-live="polite"></div>
-            <svg id="routeChart" viewBox="0 0 318 268" role="img" aria-label="목표 달성 진행 그래프">
+            <svg id="routeChart" viewBox="0 0 318 268" role="img" aria-label="Goal progress chart">
               <g id="routeGrid"></g>
               <g id="routeLines"></g>
               <g id="routeReachLabels"></g>
@@ -2359,81 +2359,81 @@ button, input, textarea, select {
               <div class="goal-compare-vs">
                 <span class="goal-compare-star" aria-hidden="true">⭐</span>
                 <strong id="goalCompareSaved">—</strong>
-                <small>노동 절약</small>
+                <small>Hustle saved</small>
               </div>
               <div class="goal-compare-col accent">
-                <small>위시부스터 🚀</small>
+                <small>WishBooster 🚀</small>
                 <strong id="goalCompareWish">—</strong>
               </div>
             </div>
-            <div class="route-control-sentences" aria-label="그래프 설정">
+            <div class="route-control-sentences" aria-label="Chart settings">
               <div class="route-control-line">
                 <div class="route-select-wrap">
-                  <button class="route-chip" id="routeCycleBtn" type="button">매주</button>
+                  <button class="route-chip" id="routeCycleBtn" type="button">Weekly</button>
                   <div class="route-cycle-menu" id="routeCycleMenu"></div>
                 </div>
                 ,
-                <span class="route-amount-unit" id="routeAmountUnit">주</span>
-                당
+                <span class="route-amount-unit" id="routeAmountUnit">wk</span>
+                per
                 RM
                 <span class="route-amount-control">
-                  <span class="route-amount-hint" id="routeAmountHint">💡 금액을 바꿔서 더 빨리 달성해보세요!</span>
-                  <button type="button" class="route-amount-step" id="routeAmountStepDown" aria-label="저축 금액 줄이기">−</button>
+                  <span class="route-amount-hint" id="routeAmountHint">💡 Tweak the amount to reach your goal faster!</span>
+                  <button type="button" class="route-amount-step" id="routeAmountStepDown" aria-label="Decrease savings amount">−</button>
                   <label class="route-inline-field route-amount-field">
-                    <input id="routeAmountInput" inputmode="numeric" type="text" autocomplete="off" value="150" aria-label="주별 저축 금액">
+                    <input id="routeAmountInput" inputmode="numeric" type="text" autocomplete="off" value="150" aria-label="Weekly savings amount">
                   </label>
-                  <button type="button" class="route-amount-step" id="routeAmountStepUp" aria-label="저축 금액 늘리기">+</button>
+                  <button type="button" class="route-amount-step" id="routeAmountStepUp" aria-label="Increase savings amount">+</button>
                 </span>
-                씩
-                저축할게요.
+                · save
+                each time.
               </div>
-              <p class="route-control-note" id="routeDepositLaborNote">*월 RM 150 저축은 회원님의 시급 기준 '17시간'의 노동 가치입니다.</p>
+              <p class="route-control-note" id="routeDepositLaborNote">*Saving RM 150/mo equals about 17 hrs of hustle at your hourly rate.</p>
               <div class="route-control-line">
-                내 시급 RM
+                My hourly rate RM
                 <label class="route-inline-field">
-                  <input id="routeWageInput" inputmode="decimal" type="text" autocomplete="off" value="10" aria-label="시급">
+                  <input id="routeWageInput" inputmode="decimal" type="text" autocomplete="off" value="10" aria-label="Hourly rate">
                 </label>
-                으로 노동 절약 계산
+                · hustle saved calc
               </div>
               <div class="route-control-line">
-                앞으로
+                Show chart for next
                 <div class="route-inline-field route-years-field">
-                  <input id="routeYearsInput" inputmode="numeric" type="text" autocomplete="off" value="1" aria-label="그래프 표시 기간">
+                  <input id="routeYearsInput" inputmode="numeric" type="text" autocomplete="off" value="1" aria-label="Chart display period">
                   <span class="route-years-stepper" aria-hidden="true">
-                    <button type="button" class="route-years-step up" id="routeYearsStepUp" aria-label="연도 늘리기">
+                    <button type="button" class="route-years-step up" id="routeYearsStepUp" aria-label="Increase years">
                       <span class="route-years-step-icon"></span>
                     </button>
-                    <button type="button" class="route-years-step down" id="routeYearsStepDown" aria-label="연도 줄이기">
+                    <button type="button" class="route-years-step down" id="routeYearsStepDown" aria-label="Decrease years">
                       <span class="route-years-step-icon"></span>
                     </button>
                   </span>
                 </div>
-                <span class="route-view-copy">년까지 보기</span>
+                <span class="route-view-copy">years</span>
               </div>
             </div>
           </div>
 
           <div class="route-diagnosis">
             <div class="route-mini-card">
-              <strong class="route-card-main" id="routeChanceMain">목표 달성 확률 --%</strong>
-              <small class="route-card-sub" id="routeChanceSub">이대로면 거의 성공해요!</small>
+              <strong class="route-card-main" id="routeChanceMain">Goal hit chance --%</strong>
+              <small class="route-card-sub" id="routeChanceSub">Keep this up — you're almost there!</small>
             </div>
             <button class="route-mini-card route-recommend-card" id="routeRecommendCard" type="button">
-              <strong class="route-card-main" id="routeRecommend">추천 레이스 (가장 빠르게!)</strong>
-              <small class="route-card-sub" id="routeRecommendMeta">월 RM 150씩 모아보기</small>
+              <strong class="route-card-main" id="routeRecommend">Recommended race (fastest!)</strong>
+              <small class="route-card-sub" id="routeRecommendMeta">Try saving RM 150/mo</small>
             </button>
           </div>
         </section>
 
 
 
-        <div class="result-legacy-divider"><span>레이스 결과 더 보기</span></div>
+        <div class="result-legacy-divider"><span>More race results</span></div>
 
         <section class="result-zone result-zone-hero">
           <div class="result-hero-card">
-            <p class="result-hero-sub" id="resultHeroSub">위시템 목표</p>
-            <p class="result-hero-big" id="resultHeroBig">위시부스터 덕분에 1.1일 덜 일해도 돼!</p>
-            <p class="result-hero-meta" id="resultHeroMeta">투자 수익이 회원님의 노동 26시간을 대신했어요</p>
+            <p class="result-hero-sub" id="resultHeroSub">WishItem goal</p>
+            <p class="result-hero-big" id="resultHeroBig">WishBooster saves you 1.1 days of hustle!</p>
+            <p class="result-hero-meta" id="resultHeroMeta">Investment gains covered 26 hrs of your hustle</p>
           </div>
         </section>
 
@@ -2444,30 +2444,30 @@ button, input, textarea, select {
               <div class="mini-stat-lbl">Goal amount</div>
             </div>
             <div class="mini-stat-card">
-              <div class="mini-stat-val" id="miniSaved">30일</div>
-              <div class="mini-stat-lbl">앞당긴 기간</div>
+              <div class="mini-stat-val" id="miniSaved">30 days</div>
+              <div class="mini-stat-lbl">Time saved</div>
             </div>
             <div class="mini-stat-card">
-              <div class="mini-stat-val accent" id="miniLabor">1.1일</div>
-              <div class="mini-stat-lbl" id="miniLaborLabel">노동 세이브</div>
+              <div class="mini-stat-val accent" id="miniLabor">1.1 days</div>
+              <div class="mini-stat-lbl" id="miniLaborLabel">Hustle saved</div>
             </div>
           </div>
-          <p class="result-labor-insight" id="resultLaborInsight">위시부스터의 투자 수익이 회원님의 노동 시간 1.1일을 아껴주었습니다. 연계 통장을 개설하고 부스터 주행을 시작해보세요!</p>
+          <p class="result-labor-insight" id="resultLaborInsight">WishBooster gains saved you 1.1 days of hustle. Link your account and start your booster run!</p>
         </section>
 
         <section class="result-zone result-zone-footer">
           <details class="calc-accordion card-soft">
-            <summary>계산 기준 보기</summary>
+            <summary>View calculation assumptions</summary>
             <div class="calc-accordion-body">
-              <div class="wage-row" id="wageRow">기준 시급 RM <span id="wageDisplay">8.72</span> <span class="chev">▼</span></div>
+              <div class="wage-row" id="wageRow">Base hourly rate RM <span id="wageDisplay">8.72</span> <span class="chev">▼</span></div>
             </div>
           </details>
           <div class="cta-seed-only">
-            <p class="prereg-bridge">이 기능은 정식 출시 후 자동으로 관리됩니다.</p>
+            <p class="prereg-bridge">This will be managed automatically after official launch.</p>
             <button class="btn-primary" id="btnSeedMoney">Claim up to RM 50 race bonus</button>
           </div>
           <p class="result-footer-note">
-            본 결과는 확정 수익이나 투자 권유가 아니라, 저축과 루트별 도착 시뮬레이션 예시입니다. 실제 결과는 시장 상황에 따라 달라질 수 있습니다.
+            These results are simulations — not guaranteed returns or investment advice. Actual outcomes may vary with market conditions.
           </p>
         </section>
       </div>
@@ -2475,21 +2475,21 @@ button, input, textarea, select {
       <div class="recommend-modal" id="recommendModal" aria-hidden="true">
         <div class="recommend-panel" role="dialog" aria-modal="true" aria-labelledby="recommendTitle">
           <div class="recommend-panel-head">
-            <small id="recommendTitle">어떻게 모을까?</small>
-            <button class="recommend-close" id="closeRecommend" type="button" aria-label="추천 팝업 닫기">×</button>
+            <small id="recommendTitle">How should I save?</small>
+            <button class="recommend-close" id="closeRecommend" type="button" aria-label="Close recommendation popup">×</button>
           </div>
           <div class="recommend-options">
             <button class="recommend-option" id="amountFirstBtn" type="button">
-              조금씩 자주 모으기
-              <span>한 달에 쓸 수 있는 금액을 편한 주기로 나눠 모아요.</span>
+              Save little & often
+              <span>Split your monthly budget into a comfy rhythm.</span>
             </button>
             <button class="recommend-option" id="timelineFirstBtn" type="button">
-              한 번에 크게 모으기
-              <span>Target timeline에 맞춰 매달 초에 크게 넣는 방식이에요.</span>
+              One big deposit
+              <span>Drop a bigger lump sum at the start of each month to hit your timeline.</span>
             </button>
           </div>
-          <p class="recommend-detail" id="recommendDetail">어떤 방식이 편한지 골라보세요.</p>
-          <button class="recommend-apply" id="applyRecommend" type="button">적용하기</button>
+          <p class="recommend-detail" id="recommendDetail">Pick whichever feels easier for you.</p>
+          <button class="recommend-apply" id="applyRecommend" type="button">Apply</button>
         </div>
       </div>
     </div>
@@ -2500,10 +2500,10 @@ button, input, textarea, select {
       <div class="s4-dim">
         <div class="s4-sheet">
           <div class="s4-icon">🎉</div>
-          <div class="s4-title">축하합니다! 첫 레이스 지원금<br>최대 RM 50 즉시 매칭!</div>
-          <div class="s4-warn">⚠️ 3일 내에 연계 통장을 활성화하지 않으면 사라져요.</div>
-          <button class="btn-primary" id="toContact">연계 통장 개설하고<br>최대 RM 50 받기</button>
-          <p class="s4-fineprint">⚠️ 본 지원금은 위시템 챌린지 성공 시에만 최종 출금이 가능합니다.</p>
+          <div class="s4-title">Congrats! First race bonus<br>up to RM 50 instantly matched!</div>
+          <div class="s4-warn">⚠️ Activate your linked account within 3 days or it's gone.</div>
+          <button class="btn-primary" id="toContact">Link your account &<br>claim up to RM 50</button>
+          <p class="s4-fineprint">⚠️ Bonus can only be withdrawn after you complete the WishItem challenge.</p>
         </div>
       </div>
     </div>
@@ -2511,16 +2511,16 @@ button, input, textarea, select {
     <div class="screen" id="sContact">
       <div class="scr-pad">
         <div class="nav-back" data-back="3"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="h-title" style="font-size:22px;">얼리 액세스 신청하고<br>최대 RM 50 선점하기</div>
-        <div class="h-sub">위시레이스 챌린지 서비스가 곧 말레이시아에 상륙합니다. 지금 이메일을 등록하고 우선 입장 자격을 확보하시면, 서비스 오픈 시 첫 레이스 지원금 최대 RM 50 혜택이 안전하게 보장됩니다.</div>
-        <div class="field-label">이메일</div>
+        <div class="h-title" style="font-size:22px;">Join early access &<br>lock in up to RM 50</div>
+        <div class="h-sub">WishRace Challenge is landing in Malaysia soon. Drop your email now to secure early access — your first race bonus up to RM 50 is locked in at launch.</div>
+        <div class="field-label">Email</div>
         <input class="field-input" id="emailInput" type="email" placeholder="example@email.com" />
         <div class="field-label">WhatsApp Number (Optional)</div>
         <input class="field-input" id="phoneInput" type="tel" placeholder="+60 12-345 6789" />
-        <div class="tip-card"><span>🔒</span><span>입력하신 정보는 정식 출시 알림 및 얼리 액세스 혜택 지급 목적으로만 안전하게 사용됩니다.</span></div>
-        <p class="s4-fineprint">⚠️ 본 지원금은 위시템 챌린지 성공 시에만 최종 출금이 가능합니다.</p>
+        <div class="tip-card"><span>🔒</span><span>Your info is only used for launch alerts and early-access perks — kept safe, always.</span></div>
+        <p class="s4-fineprint">⚠️ Bonus can only be withdrawn after you complete the WishItem challenge.</p>
         <div class="spacer"></div>
-        <p class="prereg-bridge">이 기능은 정식 출시 후 자동으로 관리됩니다.</p>
+        <p class="prereg-bridge">This will be managed automatically after official launch.</p>
         <button class="btn-primary" id="btnSubmitContact" disabled>Lock in up to RM 50 & pre-register</button>
       </div>
     </div>
@@ -2530,7 +2530,7 @@ button, input, textarea, select {
         <div class="complete-card">
           <div class="complete-icon">🎉</div>
           <div class="complete-title">You're on the list!</div>
-          <p class="complete-sub">이 서비스가 출시되는 즉시 이메일로 알림을 보내드릴게요. 내 위시템 레이스를 확인했다면, 친구들은 목적지까지 얼마나 걸릴지 챌린지를 공유해 보세요!</p>
+          <p class="complete-sub">We'll email you the moment we launch. Checked your WishItem race? Share the challenge — let your friends see how long their wish takes!</p>
           <button class="btn-primary" id="btnShareChallenge">🔗 Share the challenge with friends</button>
         </div>
       </div>
@@ -2539,44 +2539,44 @@ button, input, textarea, select {
     <div class="screen" id="s5">
       <div class="scr-pad scr-scroll safety-scroll">
         <div class="nav-back" data-back="3"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h1 class="safety-page-title">안전한 레이스를 위해<br>꼭 확인해 주세요</h1>
+        <h1 class="safety-page-title">Before you race —<br>please read this</h1>
         <div class="card-soft safety-disclaimer-card">
           <ul class="safety-disclaimer-list">
-            <li>본 결과는 확정 수익이 아닌 시뮬레이션 예시입니다.</li>
-            <li>투자 결과에 따라 원금 손실 리스크가 발생할 수 있습니다.</li>
-            <li>실제 결과는 시장 상황과 운용 결과에 따라 달라질 수 있습니다.</li>
+            <li>Results shown are simulations — not guaranteed returns.</li>
+            <li>You may lose part or all of your principal depending on investment outcomes.</li>
+            <li>Actual results may differ based on market conditions and fund performance.</li>
           </ul>
         </div>
-        <div class="safety-section-divider"><span>그래도 원금 손실이 걱정되시나요?</span></div>
+        <div class="safety-section-divider"><span>Still worried about losing your principal?</span></div>
         <div class="card-soft safety-structure-card">
           <div class="safety-structure-head">
             <span class="safety-shield" aria-hidden="true"></span>
             <div>
-              <div class="safety-structure-label">위시레이스 안전 구조</div>
-              <div class="safety-structure-heading">🛡️ 위시레이스만의 안전 완충 구조</div>
+              <div class="safety-structure-label">WishRace safety structure</div>
+              <div class="safety-structure-heading">🛡️ WishRace loss buffer — built in</div>
             </div>
           </div>
           <div class="safety-tier safety-tier-principal">
             <span class="safety-tier-icon" aria-hidden="true">💰</span>
             <div class="safety-tier-copy">
-              <p>내 투자 원금은 손실이 생겨도 가장 마지막에 영향을 받아요. (보호 우선)</p>
+              <p>Your principal is protected first — losses hit it last. (Protection priority)</p>
             </div>
           </div>
-          <div class="safety-flow-note">↑ 손실 발생 시, 아래 단계에서 먼저 흡수</div>
+          <div class="safety-flow-note">↑ Losses absorbed here first, before your money</div>
           <div class="safety-tier safety-tier-buffer">
             <span class="safety-tier-icon" aria-hidden="true">🧱</span>
             <div class="safety-tier-copy">
-              <p>손실 완충 구간이 존재하여 운용사와 플랫폼이 일정 부분의 손실을 먼저 감당합니다. (완충 역할)</p>
+              <p>A loss buffer zone lets the fund manager and platform absorb some losses first. (Buffer layer)</p>
             </div>
           </div>
           <div class="safety-summary-box">
-            처음 투자를 시작하는 분들도 안심할 수 있도록, 손실이 발생하더라도 유저의 소중한 원금이 바로 깎이지 않는 <strong>손실 우선 분담</strong> 구조로 설계되어 있습니다.
+            Designed so new investors can breathe easy. By utilizing Malaysia's sovereign-backed bond index funds (ABF) as the underlying asset, your principal is protected by a dual-layer safety mechanism, ensuring it isn't the first thing cut thanks to our <strong>loss-first sharing</strong> structure.
           </div>
-          <p class="safety-reference">💡 위시레이스가 손실 완충 구간을 먼저 책임지는 든든한 안전장치입니다.</p>
+          <p class="safety-reference">💡 WishRace covers the buffer zone first — your safety net.</p>
         </div>
         <div class="checkbox-row safety-check-row" id="riskCheckRow">
           <span class="checkbox-box" id="riskCheckBox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span>위 내용을 충분히 이해했습니다.</span>
+          <span>I understand the above.</span>
         </div>
         <button class="btn-primary safety-confirm-btn" id="toSafetyConfirm" type="button" disabled>Claim my race bonus</button>
       </div>
@@ -2584,33 +2584,33 @@ button, input, textarea, select {
 
     <div class="screen" id="s6">
       <div class="dash-scroll">
-        <div class="h-title" style="font-size:20px;">나의 <span id="dashItemName">iPad</span> 저금통</div>
+        <div class="h-title" style="font-size:20px;">My <span id="dashItemName">iPad</span> piggy bank</div>
         <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:38%"></div></div>
         <div class="stat-grid">
           <div class="stat-cell"><div class="lbl">Goal amount</div><div class="val" id="dashGoalAmt">RM 2,000</div></div>
-          <div class="stat-cell"><div class="lbl">현재 모은 금액</div><div class="val accent" id="dashSavedAmt">RM 760</div></div>
-          <div class="stat-cell"><div class="lbl">남은 거리</div><div class="val" id="dashRemainAmt">RM 1,240</div></div>
-          <div class="stat-cell"><div class="lbl">레이스 지원금</div><div class="val accent">최대 RM 50</div></div>
+          <div class="stat-cell"><div class="lbl">Saved so far</div><div class="val accent" id="dashSavedAmt">RM 760</div></div>
+          <div class="stat-cell"><div class="lbl">Left to go</div><div class="val" id="dashRemainAmt">RM 1,240</div></div>
+          <div class="stat-cell"><div class="lbl">Race bonus</div><div class="val accent">Up to RM 50</div></div>
         </div>
-        <div class="tip-card">🔥 위시레이스 챌린지 진행 중!</div>
-        <button class="btn-outline" id="toS8" style="margin-top:14px;">🎉 목표 달성 미리보기</button>
+        <div class="tip-card">🔥 WishRace Challenge in progress!</div>
+        <button class="btn-outline" id="toS8" style="margin-top:14px;">🎉 Preview goal reached</button>
       </div>
     </div>
 
     <div class="screen" id="s8">
       <div class="scr-pad" style="justify-content:center;">
         <div class="confetti-wrap"><div class="confetti-circle">🎉</div></div>
-        <div class="s8-title">어디서 위시템 도착!</div>
-        <div class="s8-sub"><span id="s8GoalAmt">RM 2,000</span>을 모두 모았습니다.</div>
+        <div class="s8-title">WishItem unlocked!</div>
+        <div class="s8-sub">You've saved <span id="s8GoalAmt">RM 2,000</span> — goal complete!</div>
         <div class="s8-actions">
-          <button class="btn-primary" id="toRestart">🛍 <span id="s8ItemName">iPad</span> 구매하기</button>
+          <button class="btn-primary" id="toRestart">🛍 Buy <span id="s8ItemName">iPad</span></button>
           <button class="btn-outline" id="btnShareS8">Flex to friends</button>
         </div>
       </div>
     </div>
 
   </div>
-  <div class="share-toast" id="shareToast" aria-live="polite">챌린지 문구가 클립보드에 복사되었습니다! 친구에게 공유해 보세요 🔗</div>
+  <div class="share-toast" id="shareToast" aria-live="polite">Challenge text copied! Share it with your friends 🔗</div>
 </div>
 
 <script>
@@ -2797,7 +2797,7 @@ button, input, textarea, select {
   const CYCLES = {
     daily: { key: 'daily', label: 'Daily', labelKo: 'Daily', intervalDays: 1 },
     weekly: { key: 'weekly', label: 'Weekly', labelKo: 'Weekly', intervalDays: 7 },
-    twice_week: { key: 'twice_week', label: '2×/week', labelKo: '일주일에 2회', intervalDays: 3.5 },
+    twice_week: { key: 'twice_week', label: '2×/week', labelKo: '2×/week', intervalDays: 3.5 },
     monthly: { key: 'monthly', label: 'Monthly', labelKo: 'Monthly', intervalDays: 30 },
   };
 
@@ -2851,7 +2851,7 @@ button, input, textarea, select {
     return { ...INVESTMENT_TIERS[3], annualPct: 1.6, balanceUsd: usd };
   }
 
-  /** 일복리 + 주기별 납입 */
+  /** Monthly compound + periodic deposits */
   function simulatePath(opts) {
     const {
       tiered = false,
@@ -2969,21 +2969,21 @@ button, input, textarea, select {
   function recommendCycle(perDeposit) {
     const x = perDeposit;
     if (x >= 1 && x <= 5) {
-      return { ...CYCLES.daily, hint: '추천 주기: Daily', warn: false };
+      return { ...CYCLES.daily, hint: 'Recommended: Daily', warn: false };
     }
     if (x >= 6 && x <= 40) {
-      return { ...CYCLES.weekly, hint: '추천 주기: Weekly', warn: false };
+      return { ...CYCLES.weekly, hint: 'Recommended: Weekly', warn: false };
     }
     if (x >= 41 && x <= 120) {
       return {
         ...CYCLES.twice_week,
-        hint: '추천 주기: Weekly 또는 일주일에 2회',
+        hint: 'Recommended: Weekly or 2×/week',
         warn: false,
       };
     }
     return {
       ...CYCLES.monthly,
-      hint: '추천 주기: Monthly (금액 부담 경고)',
+      hint: 'Recommended: Monthly (high amount warning)',
       warn: true,
     };
   }
@@ -3101,7 +3101,7 @@ button, input, textarea, select {
       endTier,
       maxReachDay,
       growth: {
-        label: '스마트 챌린지 (구간별 수익)',
+        label: 'Smart Challenge (tiered returns)',
         tab: endTier.tier,
         tierLabel: endTier.label,
         annualPct: endTier.annualPct,
@@ -3204,7 +3204,7 @@ button, input, textarea, select {
   const MAX_CHART_YEARS = 30;
 
   const state = {
-    item: '위시템',
+    item: 'WishItem',
     price: 2000,
     targetDays: 365,
     years: CHART_YEARS,
@@ -3284,17 +3284,17 @@ button, input, textarea, select {
   function cycleInputLabels(cycle) {
     switch (cycle) {
       case 'Daily':
-        return { unit: '일', aria: '일별 저축 금액' };
+        return { unit: 'day', aria: 'Daily savings amount' };
       case '3×/week':
-        return { unit: '회', aria: '회당 저축 금액' };
+        return { unit: 'time', aria: 'Per-deposit savings amount' };
       case '2×/week':
-        return { unit: '회', aria: '회당 저축 금액' };
+        return { unit: 'time', aria: 'Per-deposit savings amount' };
       case 'Weekly':
-        return { unit: '주', aria: '주별 저축 금액' };
+        return { unit: 'wk', aria: 'Weekly savings amount' };
       case 'Monthly':
-        return { unit: '월', aria: '월별 저축 금액' };
+        return { unit: 'mo', aria: 'Monthly savings amount' };
       default:
-        return { unit: '월', aria: '월별 저축 금액' };
+        return { unit: 'mo', aria: 'Monthly savings amount' };
     }
   }
 
@@ -3380,8 +3380,8 @@ button, input, textarea, select {
       perCycleAmount,
       cycle,
       days,
-      title: '한 번에 크게 모으기',
-      note: `${fmt.format(days)}일 안에 맞추려면, 매달 초에 RM ${formatPerCycle(perCycleAmount)}를 한 번에 넣는 게 제일 빨라요.`,
+      title: 'One big deposit',
+      note: `To hit ${fmt.format(days)} days, drop RM ${formatPerCycle(perCycleAmount)} at the start of each month — fastest way.`,
     };
   }
 
@@ -3396,10 +3396,10 @@ button, input, textarea, select {
       perCycleAmount,
       cycle,
       days,
-      title: '조금씩 자주 모으기',
+      title: 'Save little & often',
       note: days
-        ? `한 달에 RM ${fmt.format(monthlyBudget)}씩, ${cycle}로 나눠 모으면 약 ${fmt.format(days)}일 뒤에 도달해요.`
-        : `한 달 RM ${fmt.format(monthlyBudget)} 안에서는 30년 안에 도달하기 어려워요.`,
+        ? `Saving RM ${fmt.format(monthlyBudget)}/mo split as ${cycle} gets you there in ~${fmt.format(days)} days.`
+        : `At RM ${fmt.format(monthlyBudget)}/mo, reaching your goal within 30 years is unlikely.`,
     };
   }
 
@@ -3411,7 +3411,7 @@ button, input, textarea, select {
 
   function updateTargetDaysLabel() {
     if ($('routeTargetDaysLabel')) {
-      $('routeTargetDaysLabel').textContent = `${fmt.format(state.targetDays)}일`;
+      $('routeTargetDaysLabel').textContent = `${fmt.format(state.targetDays)} days`;
     }
     syncPrefillMutedUI();
   }
@@ -3639,27 +3639,27 @@ button, input, textarea, select {
 
   function buildXAxisTicks(chartMaxDay) {
     const years = Math.max(1, Math.round(chartMaxDay / 365));
-    const ticks = [{ day: 0, label: '오늘' }];
+    const ticks = [{ day: 0, label: 'Today' }];
 
     if (years === 1) {
-      ticks.push({ day: Math.round(chartMaxDay * 0.25), label: '3개월' });
-      ticks.push({ day: Math.round(chartMaxDay * 0.5), label: '6개월' });
-      ticks.push({ day: Math.round(chartMaxDay * 0.75), label: '9개월' });
-      ticks.push({ day: chartMaxDay, label: '1년' });
+      ticks.push({ day: Math.round(chartMaxDay * 0.25), label: '3 mo' });
+      ticks.push({ day: Math.round(chartMaxDay * 0.5), label: '6 mo' });
+      ticks.push({ day: Math.round(chartMaxDay * 0.75), label: '9 mo' });
+      ticks.push({ day: chartMaxDay, label: '1 yr' });
       return ticks;
     }
 
     const step = years <= 5 ? 1 : years <= 10 ? 2 : years <= 20 ? 5 : 10;
     for (let year = step; year < years; year += step) {
-      ticks.push({ day: year * 365, label: `${year}년` });
+      ticks.push({ day: year * 365, label: `${year} yr` });
     }
-    ticks.push({ day: chartMaxDay, label: `${years}년` });
+    ticks.push({ day: chartMaxDay, label: `${years} yr` });
     return ticks;
   }
 
   function formatDaysLabel(days) {
     if (days == null) return '—';
-    return `${Math.max(1, Math.round(days))}일`;
+    return `${Math.max(1, Math.round(days))} days`;
   }
 
   function daysSavedBetween(savingDays, wishDays) {
@@ -3718,9 +3718,9 @@ button, input, textarea, select {
   function formatGoalChartHeroTitle(itemName, laborHours) {
     const item = itemName || 'WishItem';
     if (laborHours > 0) {
-      return `일반 저축보다 ${laborHours}시간 더 빨리 ${item} 구매 완료!`;
+      return `${laborHours} hrs sooner than regular saving — ${item} unlocked!`;
     }
-    return `위시부스터로 ${item} 목표에 더 빨리 도달!`;
+    return `Reach your ${item} goal faster with WishBooster!`;
   }
 
   function hideAmountHint() {
@@ -3793,7 +3793,7 @@ button, input, textarea, select {
         'beforeend',
         `<g class="route-reach-label wish" transform="translate(${px.toFixed(2)}, ${anchorY.toFixed(2)})">
           <rect class="route-reach-bg" x="-40" y="-34" width="80" height="34" rx="12"></rect>
-          <text class="route-reach-buy" text-anchor="middle" y="-18">🎉 구매!</text>
+          <text class="route-reach-buy" text-anchor="middle" y="-18">🎉 Got it!</text>
           <text class="route-reach-months" text-anchor="middle" y="-2">${formatDaysLabel(wishHit.day)}</text>
         </g>`
       );
@@ -3814,7 +3814,7 @@ button, input, textarea, select {
         'beforeend',
         `<g class="route-reach-label wish" transform="translate(${px.toFixed(2)}, ${anchorY.toFixed(2)})">
           <rect class="route-reach-bg" x="-40" y="-34" width="80" height="34" rx="12"></rect>
-          <text class="route-reach-buy" text-anchor="middle" y="-18">🎉 구매!</text>
+          <text class="route-reach-buy" text-anchor="middle" y="-18">🎉 Got it!</text>
           <text class="route-reach-months" text-anchor="middle" y="-2">${formatDaysLabel(wishHit.day)}</text>
         </g>`
       );
@@ -3993,54 +3993,54 @@ button, input, textarea, select {
     const wage = laborMetrics?.wage ?? state.wage;
 
     if ($('goalCompareSaving')) {
-      $('goalCompareSaving').textContent = savingD != null ? `${savingD}일` : '—';
+      $('goalCompareSaving').textContent = savingD != null ? `${savingD} days` : '—';
     }
     if ($('goalCompareWish')) {
-      $('goalCompareWish').textContent = wishD != null ? `${wishD}일` : '—';
+      $('goalCompareWish').textContent = wishD != null ? `${wishD} days` : '—';
     }
     if ($('goalCompareSaved')) {
-      $('goalCompareSaved').textContent = laborHours > 0 ? `${laborHours}시간` : '—';
+      $('goalCompareSaved').textContent = laborHours > 0 ? `${laborHours} hrs` : '—';
     }
     if ($('routeDepositLaborNote') && monthlyBudget != null) {
       const depositLaborHours = Math.max(1, Math.round(monthlyBudget / Math.max(0.01, wage)));
       $('routeDepositLaborNote').textContent =
-        `*월 RM ${Math.round(monthlyBudget).toLocaleString('en-MY')} 저축은 회원님의 시급 기준 '${depositLaborHours}시간'의 노동 가치입니다.`;
+        `*Saving RM ${Math.round(monthlyBudget).toLocaleString('en-MY')}/mo equals about ${depositLaborHours} hrs of hustle at your hourly rate.`;
     }
     if ($('savingReachLabel')) {
       $('savingReachLabel').textContent = savingD != null
-        ? `${savingD}일 주행 (내 노동 100% 필요)`
-        : '미도달';
+        ? `${savingD}-day run (100% your hustle)`
+        : 'Not reached';
     }
     if ($('growthReachLabel')) {
       $('growthReachLabel').textContent = wishD != null
         ? (laborHours > 0
-          ? `${wishD}일 도착 (부스터가 ${laborHours}시간 대신 뛰어줌 🚀)`
-          : `${wishD}일 도착`)
-        : '미도달';
+          ? `${wishD}-day arrival (booster runs ${laborHours} hrs for you 🚀)`
+          : `${wishD}-day arrival`)
+        : 'Not reached';
     }
     if ($('goalChartHeroTitle')) {
       $('goalChartHeroTitle').textContent = formatGoalChartHeroTitle(state.item, laborHours);
     }
     if ($('resultHeroBig')) {
       $('resultHeroBig').textContent = laborHours > 0
-        ? `위시부스터 덕분에 ${laborDays}일 덜 일해도 돼!`
-        : '위시부스터로 노동 시간을 아껴보세요!';
+        ? `WishBooster saves you ${laborDays} days of hustle!`
+        : 'Save hustle hours with WishBooster!';
     }
     if ($('resultHeroMeta')) {
       $('resultHeroMeta').textContent = laborHours > 0
-        ? `투자 수익이 회원님의 노동 ${laborHours}시간을 대신했어요`
-        : '부스터 주행으로 노동 부담을 줄일 수 있어요';
+        ? `Investment gains covered ${laborHours} hrs of your hustle`
+        : 'Booster runs can lighten your hustle load';
     }
     if ($('miniSaved')) {
-      $('miniSaved').textContent = daysSaved > 0 ? `${daysSaved}일` : '—';
+      $('miniSaved').textContent = daysSaved > 0 ? `${daysSaved} days` : '—';
     }
     if ($('miniLabor')) {
-      $('miniLabor').textContent = laborHours > 0 ? `${laborDays}일` : '—';
+      $('miniLabor').textContent = laborHours > 0 ? `${laborDays} days` : '—';
     }
     if ($('resultLaborInsight')) {
       $('resultLaborInsight').textContent = laborHours > 0
-        ? `위시부스터의 투자 수익이 회원님의 노동 시간 ${laborDays}일을 아껴주었습니다. 연계 통장을 개설하고 부스터 주행을 시작해보세요!`
-        : '연계 통장을 개설하고 부스터 주행을 시작하면, 투자 수익으로 노동 시간을 아낄 수 있어요.';
+        ? `WishBooster gains saved you ${laborDays} days of hustle. Link your account and start your booster run!`
+        : 'Link your account and start a booster run to save hustle hours through investment gains.';
     }
   }
 
@@ -4108,10 +4108,10 @@ button, input, textarea, select {
       Math.max(0, Math.round(((viewX - plotLeft) / (plotRight - plotLeft)) * maxDay))
     );
     const candidates = [
-      { label: '일반 저축', kind: 'saving', point: pointAt(saving, day) },
-      { label: '위시부스터', kind: 'wish', point: pointAt(wish, day) },
+      { label: 'Regular saving', kind: 'saving', point: pointAt(saving, day) },
+      { label: 'WishBooster', kind: 'wish', point: pointAt(wish, day) },
       ...extra.map((route, index) => ({
-        label: index === 0 ? '추가 레이스' : `추가 레이스 ${index + 1}`,
+        label: index === 0 ? 'Extra race' : `Extra race ${index + 1}`,
         kind: 'extra',
         point: pointAt(route.points, day),
       })),
@@ -4140,14 +4140,14 @@ button, input, textarea, select {
     const progress = Math.min(100, (nearest.point.value / state.price) * 100);
     const amount = Math.round(nearest.point.value);
     const diff = Math.round(nearest.point.value - savingPoint.value);
-    const diffLine = nearest.kind === 'saving' ? '저축 기준선' : `저축보다 RM ${fmt.format(diff)} 더 모음`;
+    const diffLine = nearest.kind === 'saving' ? 'Saving baseline' : `RM ${fmt.format(diff)} more than saving`;
     const marker = $('routeMarker');
     if (marker) {
       marker.innerHTML = `<line class="route-marker-line" x1="${nearest.px}" x2="${nearest.px}" y1="${plotTop}" y2="${plotBottom}"></line>`;
     }
     const tooltip = $('routeTooltip');
     if (tooltip) {
-      tooltip.innerHTML = `<strong>${dateFromDay(nearest.point.day)} · ${nearest.label}</strong>도달률 ${progress.toFixed(0)}%<br>${nearest.label} RM ${fmt.format(amount)}<br>${diffLine}`;
+      tooltip.innerHTML = `<strong>${dateFromDay(nearest.point.day)} · ${nearest.label}</strong>Progress ${progress.toFixed(0)}%<br>${nearest.label} RM ${fmt.format(amount)}<br>${diffLine}`;
       tooltip.classList.add('show');
     }
     positionTooltip(nearest.px, nearest.py);
@@ -4441,10 +4441,10 @@ button, input, textarea, select {
     hideTooltip();
     updateGoalChartUI(savingHit, wishHit, laborMetrics, snapshot.monthlyBudget);
 
-    if ($('routeChanceMain')) $('routeChanceMain').textContent = `목표 달성 확률 ${chance}%`;
+    if ($('routeChanceMain')) $('routeChanceMain').textContent = `Goal hit chance ${chance}%`;
     const cardRecommendation = recommendForCard();
     if ($('routeRecommendMeta')) {
-      $('routeRecommendMeta').textContent = `월 RM ${fmt.format(cardRecommendation.monthlyBudget)}씩 모아보기`;
+      $('routeRecommendMeta').textContent = `Try saving RM ${fmt.format(cardRecommendation.monthlyBudget)}/mo`;
     }
 
     const legend = $('routeLegend');
@@ -4452,7 +4452,7 @@ button, input, textarea, select {
       legend.innerHTML = `
         <span><i class="route-dot"></i>Regular saving 🏦</span>
         <span><i class="route-dot orange"></i>WishBooster 🚀 (current goal)</span>
-        ${state.extraRoutes.length ? '<span><i class="route-dot blue"></i>추가 레이스 ⚡ (커스텀)</span>' : ''}
+        ${state.extraRoutes.length ? '<span><i class="route-dot blue"></i>Extra race ⚡ (custom)</span>' : ''}
       `;
     }
 
@@ -4869,7 +4869,7 @@ button, input, textarea, select {
 
   function formatReachMonths(reach, horizonDays) {
     const m = reachMonths(reach, horizonDays);
-    return m ? `${m}개월 도착` : '미도달';
+    return m ? `Arrives in ${m} mo` : 'Not reached';
   }
 
   const LOADING_LINES = [
@@ -5001,23 +5001,23 @@ button, input, textarea, select {
   }
 
   function formatSavingTrackLabel(days) {
-    if (days == null) return '미도달';
-    return `${Math.max(1, Math.round(days))}일 주행 (내 노동 100% 필요)`;
+    if (days == null) return 'Not reached';
+    return `${Math.max(1, Math.round(days))}-day run (100% your hustle)`;
   }
 
   function formatGoalChartHeroTitle(itemName, laborHours) {
     const item = itemName || 'WishItem';
     if (laborHours > 0) {
-      return `일반 저축보다 ${laborHours}시간 더 빨리 ${item} 구매 완료!`;
+      return `${laborHours} hrs sooner than regular saving — ${item} unlocked!`;
     }
-    return `위시부스터로 ${item} 목표에 더 빨리 도달!`;
+    return `Reach your ${item} goal faster with WishBooster!`;
   }
 
   function formatWishTrackLabel(days, laborHours) {
-    if (days == null) return '미도달';
+    if (days == null) return 'Not reached';
     const hours = Math.round(laborHours || 0);
-    if (hours <= 0) return `${Math.max(1, Math.round(days))}일 도착`;
-    return `${Math.max(1, Math.round(days))}일 도착 (부스터가 ${hours}시간 대신 뛰어줌 🚀)`;
+    if (hours <= 0) return `${Math.max(1, Math.round(days))}-day arrival`;
+    return `${Math.max(1, Math.round(days))}-day arrival (booster runs ${hours} hrs for you 🚀)`;
   }
 
   function monthlyDepositLaborHours(monthlyBudget, wage) {
@@ -5053,36 +5053,36 @@ button, input, textarea, select {
     );
     setText('goalChartItemIcon', icon);
     setText('goalChartItemName', chartRoute.item || state.itemName);
-    setText('goalCompareSaving', savingDays != null ? `${Math.round(savingDays)}일` : '—');
-    setText('goalCompareWish', wishDays != null ? `${Math.round(wishDays)}일` : '—');
-    setText('goalCompareSaved', laborHours > 0 ? `${laborHours}시간` : '—');
+    setText('goalCompareSaving', savingDays != null ? `${Math.round(savingDays)} days` : '—');
+    setText('goalCompareWish', wishDays != null ? `${Math.round(wishDays)} days` : '—');
+    setText('goalCompareSaved', laborHours > 0 ? `${laborHours} hrs` : '—');
 
     setText(
       'routeDepositLaborNote',
-      `*월 RM ${Math.round(monthlyBudget).toLocaleString('en-MY')} 저축은 회원님의 시급 기준 '${depositLaborHours}시간'의 노동 가치입니다.`
+      `*Saving RM ${Math.round(monthlyBudget).toLocaleString('en-MY')}/mo equals about ${depositLaborHours} hrs of hustle at your hourly rate.`
     );
 
-    setText('resultHeroSub', `${state.itemName} 목표`);
+    setText('resultHeroSub', `${state.itemName} goal`);
     setText(
       'resultHeroBig',
       laborHours > 0
-        ? `위시부스터 덕분에 ${laborDays}일 덜 일해도 돼!`
-        : '위시부스터로 노동 시간을 아껴보세요!'
+        ? `WishBooster saves you ${laborDays} days of hustle!`
+        : 'Save hustle hours with WishBooster!'
     );
     setText(
       'resultHeroMeta',
       laborHours > 0
-        ? `투자 수익이 회원님의 노동 ${laborHours}시간을 대신했어요`
-        : '부스터 주행으로 노동 부담을 줄일 수 있어요'
+        ? `Investment gains covered ${laborHours} hrs of your hustle`
+        : 'Booster runs can lighten your hustle load'
     );
 
-    setText('miniLabor', laborHours > 0 ? `${laborDays}일` : '—');
-    setText('miniLaborLabel', '노동 세이브');
+    setText('miniLabor', laborHours > 0 ? `${laborDays} days` : '—');
+    setText('miniLaborLabel', 'Hustle saved');
     setText(
       'resultLaborInsight',
       laborHours > 0
-        ? `위시부스터의 투자 수익이 회원님의 노동 시간 ${laborDays}일을 아껴주었습니다. 연계 통장을 개설하고 부스터 주행을 시작해보세요!`
-        : '연계 통장을 개설하고 부스터 주행을 시작하면, 투자 수익으로 노동 시간을 아낄 수 있어요.'
+        ? `WishBooster gains saved you ${laborDays} days of hustle. Link your account and start your booster run!`
+        : 'Link your account and start a booster run to save hustle hours through investment gains.'
     );
 
     setText('savingReachLabel', formatSavingTrackLabel(savingDays));
@@ -5144,7 +5144,7 @@ button, input, textarea, select {
     updateLaborMessaging(r, activeRoute);
 
     setText('miniGoal', F.fmtRM(activeRoute.price ?? route?.price ?? state.targetAmount));
-    setText('miniSaved', daysSaved > 0 ? `${daysSaved}일` : '—');
+    setText('miniSaved', daysSaved > 0 ? `${daysSaved} days` : '—');
     setText('raceGoalAmount', F.fmtRM(activeRoute.price ?? route?.price ?? state.targetAmount));
     setText('wageDisplay', r.wage.toFixed(2));
 
@@ -5155,8 +5155,8 @@ button, input, textarea, select {
       setText(
         'raceInsight',
         insightHours > 0
-          ? `일반저축은 ${Math.round(savingDays)}일 동안 내 노동 100%가 필요해요. 위시부스터는 ${Math.round(wishDays)}일에 도착하고, 투자 수익이 ${insightHours}시간의 노동을 대신해줬어요.`
-          : `일반저축은 ${Math.round(savingDays)}일, 위시부스터는 ${Math.round(wishDays)}일에 도착해요.`
+          ? `Regular saving needs 100% of your hustle for ${Math.round(savingDays)} days. WishBooster arrives in ${Math.round(wishDays)} days — investment gains covered ${insightHours} hrs.`
+          : `Regular saving: ${Math.round(savingDays)} days · WishBooster: ${Math.round(wishDays)} days.`
       );
     }
 
@@ -5336,7 +5336,7 @@ button, input, textarea, select {
     const url = location.href;
 
     if (!r) {
-      return `내 위시템: ${item} · 너도 네 위시템 털어봐. ${url}`;
+      return `My WishItem: ${item} · Try yours too. ${url}`;
     }
 
     const savingDays = r.savingReachDay ?? simResult?.savingReach?.day ?? null;
@@ -5351,14 +5351,14 @@ button, input, textarea, select {
     const cycleLabel = r.cycle || KEY_TO_ROUTE_CYCLE[state.cycleKey] || 'Weekly';
 
     const segments = [
-      `내 위시템: ${item}`,
-      `목표 ${goalAmount}`,
-      `월 ${monthlyBudget} · ${cycleLabel}`,
-      savingDays != null ? `그냥 모으면 ${savingDays}일` : '그냥 모으면 —',
-      wishRaceDays != null ? `위시부스터면 ${wishRaceDays}일` : '위시부스터면 —',
-      daysSaved != null ? `${daysSaved}일 단축 가능` : '단축 —',
-      survivalPct != null ? `통장 생존 가능성 ${survivalPct}%` : '통장 생존 가능성 —',
-      '너도 네 위시템 털어봐.',
+      `My WishItem: ${item}`,
+      `Goal ${goalAmount}`,
+      `${monthlyBudget}/mo · ${cycleLabel}`,
+      savingDays != null ? `Regular saving: ${savingDays} days` : 'Regular saving: —',
+      wishRaceDays != null ? `With WishBooster: ${wishRaceDays} days` : 'With WishBooster: —',
+      daysSaved != null ? `${daysSaved} days saved` : 'Time saved: —',
+      survivalPct != null ? `Goal hit chance ${survivalPct}%` : 'Goal hit chance —',
+      'Try your WishItem too.',
     ];
 
     return `${segments.join(' · ')} ${url}`;
@@ -5375,7 +5375,7 @@ button, input, textarea, select {
   function handleShare(source) {
     syncLatestRouteState();
     trackShare(source);
-    const text = `WishRace goal: ${state.itemName} ${F.fmtRM(state.targetAmount)} 목표! 🎯`;
+    const text = `WishRace goal: ${state.itemName} ${F.fmtRM(state.targetAmount)}! 🎯`;
     if (navigator.share) {
       navigator.share({ title: 'WishRace', text, url: location.href }).catch(() => {});
     } else if (navigator.clipboard) {
@@ -5386,10 +5386,10 @@ button, input, textarea, select {
 
   function editWage() {
     WishFastTracker.track('click_edit_wage', { wage: state.wage });
-    const raw = prompt('시급을 입력하세요 (RM)', state.wage.toFixed(2));
+    const raw = prompt('Enter your hourly rate (RM)', state.wage.toFixed(2));
     if (raw == null) return;
     const val = parseFloat(String(raw).replace(/[^0-9.]/g, ''));
-    if (!Number.isFinite(val) || val <= 0) return alert('올바른 시급을 입력해주세요.');
+    if (!Number.isFinite(val) || val <= 0) return alert('Please enter a valid hourly rate.');
     state.wage = val;
     runSimulation();
     if (routeSnapshot) renderLegacySections(routeSnapshot);
