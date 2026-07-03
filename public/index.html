@@ -1697,28 +1697,52 @@ button, input, textarea, select {
 }
 .route-chart-info-btn {
   flex-shrink: 0;
-  width: 28px; height: 28px;
-  border: 1px solid var(--logup-line);
+  padding: 7px 12px;
+  border: 1px solid #d1d5db;
   border-radius: 999px;
   background: #fff;
-  color: var(--text-muted);
-  font-size: 14px; font-weight: 800;
+  color: #111827;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.route-chart-info-btn:hover {
+  transform: translateY(-1px);
+  border-color: #9ca3af;
+  box-shadow: 0 4px 10px rgba(17, 24, 39, 0.12);
+}
+.route-chart-info-btn:active {
+  transform: translateY(0);
 }
 .route-chart-info-popover {
   display: none;
   position: absolute;
-  top: 36px; right: 0;
-  width: min(260px, 72vw);
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(290px, 84vw);
   padding: 12px 14px;
   border-radius: 14px;
   background: #fff;
   border: 1px solid var(--logup-line);
   box-shadow: var(--card-shadow-soft);
-  font-size: 12px; line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.6;
   color: var(--text-muted);
   z-index: 12;
+}
+.route-chart-info-popover p {
+  margin: 0 0 8px;
+}
+.route-chart-info-popover p:last-child {
+  margin-bottom: 0;
 }
 .route-chart-head { position: relative; }
 .route-chart-info-popover.open { display: block; }
@@ -2279,8 +2303,11 @@ button, input, textarea, select {
                   <span><i class="route-dot orange"></i>WishBooster invest sim 🚀 (current goal)</span>
                 </div>
               </div>
-              <button type="button" class="route-chart-info-btn" id="routeChartInfoBtn" aria-label="How we calculate" aria-expanded="false" aria-controls="routeChartInfoPopover">ⓘ</button>
-              <div class="route-chart-info-popover" id="routeChartInfoPopover" role="tooltip">Basis: regular savings at 3% p.a.; WishBooster at 1.6% monthly compound on balance (~20.98% p.a.)</div>
+              <button type="button" class="route-chart-info-btn" id="routeChartInfoBtn" aria-label="Why is WishBooster faster?" aria-expanded="false" aria-controls="routeChartInfoPopover">🤔 Why booster tho? 🚀 👆</button>
+              <div class="route-chart-info-popover" id="routeChartInfoPopover" role="tooltip">
+                <p><strong>Regular saving 🏦</strong> — based on normal bank rate (~3% p.a.)</p>
+                <p><strong>WishBooster 🚀</strong> — 1.6% monthly compound on your balance (~21% p.a.). Ngl that's why booster hits different on the chart.</p>
+              </div>
             </div>
             <div class="route-tooltip-box" id="routeTooltip" role="status" aria-live="polite"></div>
             <div class="route-chart-canvas">
@@ -2348,8 +2375,7 @@ button, input, textarea, select {
 
         <section class="result-zone result-zone-footer">
           <div class="cta-seed-only">
-            <p class="prereg-bridge">This will be managed automatically after official launch.</p>
-            <button class="btn-primary" id="btnSeedMoney">Claim up to RM 50 race boost</button>
+            <button class="btn-primary" id="btnSeedMoney">Save My Plan &amp; Enter Wishlist Giveaway</button>
           </div>
           <p class="result-footer-note">
             These results are simulations — not guaranteed returns or investment advice. Actual outcomes may vary with market conditions.
@@ -2389,15 +2415,15 @@ button, input, textarea, select {
     <div class="screen" id="sContact">
       <div class="scr-pad">
         <div class="nav-back" data-back="3"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="h-title" style="font-size:22px;">Join early access &<br>lock in up to RM 50</div>
-        <div class="h-sub">WishRace is landing in Malaysia soon. Drop your email to save your results and get notified to claim your RM 50 launch boost when we launch.</div>
+        <div class="h-title" style="font-size:22px;">Save Your Plan &amp; Win Your Wishlist!</div>
+        <div class="h-sub">Your personalized asset-building plan is ready. Enter your email to lock in your early-access invitation and automatically enter the draw to win your wishlist item!</div>
         <div class="field-label">Email</div>
         <input class="field-input" id="emailInput" type="email" placeholder="example@email.com" />
         <div class="tip-card"><span>🔒</span><span>Your info is only used for launch alerts and early-access rewards — kept safe, never spammed.</span></div>
         <p class="s4-fineprint">⚠️ The RM 50 boost can only be withdrawn after you complete the WishRace challenge.</p>
         <div class="spacer"></div>
         <p class="prereg-bridge">This will be managed automatically after official launch.</p>
-        <button class="btn-primary" id="btnSubmitContact" disabled>Save results & get notified</button>
+        <button class="btn-primary" id="btnSubmitContact" disabled>Submit &amp; Enter Giveaway</button>
       </div>
     </div>
 
@@ -5316,7 +5342,7 @@ document.querySelectorAll('.period-btn').forEach((btn) => {
 
   const emailInput = $('emailInput');
   const btnSubmitContact = $('btnSubmitContact');
-  const btnSubmitContactLabel = 'Save results & get notified';
+  const btnSubmitContactLabel = 'Submit & Enter Giveaway';
 
   function validateContact() {
     const email = emailInput.value.trim();
