@@ -1654,18 +1654,91 @@ button, input, textarea, select {
 }
 
 .route-tooltip-box {
-  position: absolute; top: 46px; left: 18px; min-width: 176px;
-  padding: 10px 12px; border-radius: 16px;
-  background: rgba(16, 24, 32, 0.92); color: #fff;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
-  opacity: 0; transform: translateY(4px); transition: 0.18s ease;
-  pointer-events: none; font-size: 11px; line-height: 1.45; z-index: 5;
+  position: absolute;
+  top: 46px;
+  left: 18px;
+  min-width: 200px;
+  max-width: 236px;
+  padding: 0;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--logup-line);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  color: var(--text-primary);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: 0.18s ease;
+  pointer-events: none;
+  font-size: 11px;
+  line-height: 1.45;
+  z-index: 5;
+  overflow: hidden;
 }
 .route-tooltip-box.show { opacity: 1; transform: translateY(0); }
-.route-tooltip-box strong {
-  display: block; font-size: 12px; margin-bottom: 2px;
-  color: #fff;
+.route-tooltip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px 8px;
 }
+.route-tooltip-head.wish { background: var(--logup-orange-soft); }
+.route-tooltip-head.saving { background: #f3f4f6; }
+.route-tooltip-head.extra { background: #eef2ff; }
+.route-tooltip-date {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.route-tooltip-badge {
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.route-tooltip-badge.wish { color: #111827; }
+.route-tooltip-badge.saving { color: #374151; }
+.route-tooltip-badge.extra { color: #4338ca; }
+.route-tooltip-body { padding: 10px 12px 12px; }
+.route-tooltip-progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+.route-tooltip-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.15s ease;
+}
+.route-tooltip-progress-fill.wish { background: var(--logup-orange); }
+.route-tooltip-progress-fill.saving { background: #9ca3af; }
+.route-tooltip-progress-fill.extra { background: #6366f1; }
+.route-tooltip-progress-label {
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #4b5563;
+}
+.route-tooltip-amount {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  margin-bottom: 4px;
+  color: #111827;
+}
+.route-tooltip-amount.wish { color: #111827; }
+.route-tooltip-amount.saving { color: #111827; }
+.route-tooltip-amount.extra { color: #111827; }
+.route-tooltip-sub {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #4b5563;
+}
+.route-tooltip-sub.highlight { color: #111827; }
 
 .route-control-row {
   margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
@@ -3948,8 +4021,8 @@ button, input, textarea, select {
     if (!tooltip || !wrap || !svg) return;
     const wrapRect = wrap.getBoundingClientRect();
     const svgRect = svg.getBoundingClientRect();
-    const tooltipW = tooltip.offsetWidth || 176;
-    const tooltipH = tooltip.offsetHeight || 72;
+    const tooltipW = tooltip.offsetWidth || 220;
+    const tooltipH = tooltip.offsetHeight || 120;
     const svgLeft = svgRect.left - wrapRect.left;
     const svgTop = svgRect.top - wrapRect.top;
     const gap = 14;
@@ -3960,6 +4033,43 @@ button, input, textarea, select {
     left = Math.max(8, Math.min(left, wrapRect.width - tooltipW - 8));
     tooltip.style.left = `${left}px`;
     tooltip.style.top = `${top}px`;
+  }
+
+  function buildRouteTooltipHtml(nearest, progress, amount, diff) {
+    const isWish = nearest.kind === 'wish';
+    const isSaving = nearest.kind === 'saving';
+    const kindClass = isWish ? 'wish' : (isSaving ? 'saving' : 'extra');
+    const emoji = isWish ? '🚀' : (isSaving ? '🏦' : '⚡');
+    const lineName = isWish ? 'WishBooster' : (isSaving ? 'Regular save' : nearest.label);
+    const progressPct = Math.min(100, progress).toFixed(0);
+    let progressLabel;
+    if (progress >= 100) progressLabel = 'Goal unlocked! 🎯';
+    else if (progress >= 75) progressLabel = `${progressPct}% — almost there 👀`;
+    else progressLabel = `${progressPct}% of your goal`;
+
+    let subLine;
+    if (isSaving) {
+      subLine = 'Normal bank savings line';
+    } else if (diff > 0) {
+      subLine = `+RM ${fmt.format(diff)} ahead of regular save 🔥`;
+    } else {
+      subLine = 'Same as regular save rn';
+    }
+
+    return `
+      <div class="route-tooltip-head ${kindClass}">
+        <span class="route-tooltip-date">${dateFromDay(nearest.point.day)}</span>
+        <span class="route-tooltip-badge ${kindClass}">${emoji} ${lineName}</span>
+      </div>
+      <div class="route-tooltip-body">
+        <div class="route-tooltip-progress-bar">
+          <div class="route-tooltip-progress-fill ${kindClass}" style="width:${Math.min(100, progress)}%"></div>
+        </div>
+        <div class="route-tooltip-progress-label">${progressLabel}</div>
+        <div class="route-tooltip-amount ${kindClass}">RM ${fmt.format(amount)}</div>
+        <div class="route-tooltip-sub${!isSaving && diff > 0 ? ' highlight' : ''}">${subLine}</div>
+      </div>
+    `;
   }
 
   function showTooltipFromPointer(event) {
@@ -4018,14 +4128,13 @@ button, input, textarea, select {
     const progress = Math.min(100, (nearest.point.value / state.price) * 100);
     const amount = Math.round(nearest.point.value);
     const diff = Math.round(nearest.point.value - savingPoint.value);
-    const diffLine = nearest.kind === 'saving' ? 'Savings baseline' : `RM ${fmt.format(diff)} more than savings`;
     const marker = $('routeMarker');
     if (marker) {
       marker.innerHTML = `<line class="route-marker-line" x1="${nearest.px}" x2="${nearest.px}" y1="${plotTop}" y2="${plotBottom}"></line>`;
     }
     const tooltip = $('routeTooltip');
     if (tooltip) {
-      tooltip.innerHTML = `<strong>${dateFromDay(nearest.point.day)} · ${nearest.label}</strong> · ${progress.toFixed(0)}% there<br>${nearest.label} RM ${fmt.format(amount)}<br>${diffLine}`;
+      tooltip.innerHTML = buildRouteTooltipHtml(nearest, progress, amount, diff);
       tooltip.classList.add('show');
     }
     positionTooltip(nearest.px, nearest.py);
