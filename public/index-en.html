@@ -2370,25 +2370,41 @@ button, input, textarea, select {
       </div>
     </div>
 
-    <div class="screen" id="loading">
-      <div class="loading-pad">
-        <div class="loading-card">
-          <div class="loading-badge">Calculating Wish D-Day</div>
-          <div class="loading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1" aria-label="Loading progress">
-            <svg class="loading-progress-ring" viewBox="0 0 72 72" aria-hidden="true">
-              <circle class="loading-progress-bg" cx="36" cy="36" r="30"></circle>
-              <circle class="loading-progress-fill" id="loadingProgressArc" cx="36" cy="36" r="30"></circle>
-            </svg>
-            <span class="loading-progress-car" id="loadingProgressCar" aria-hidden="true">🏎️</span>
-            <span class="loading-progress-text" id="loadingPercent">1%</span>
+        <div class="screen" id="sIncome">
+      <div class="page-layout layout-input direct-input-layout">
+        <header class="layout-top layout-top-input direct-input-header">
+          <div class="eyebrow direct-eyebrow">Almost there</div>
+          <div class="h-title layout-title direct-title">Tell us about you</div>
+          <div class="direct-subtitle">We use this to estimate work hours saved on your plan.</div>
+        </header>
+        <div class="layout-card input-card direct-input-card">
+          <div class="input-card-body">
+            <div class="field-block">
+              <div class="field-label direct-label">You are a...</div>
+              <div class="period-grid" id="employmentTypeGrid">
+                <button type="button" class="period-btn employment-type-btn" data-type="student">🎓 University student</button>
+                <button type="button" class="period-btn employment-type-btn" data-type="worker">💼 Working professional</button>
+              </div>
+            </div>
+            <div class="field-block" id="hourlyIncomeBlock" hidden>
+              <div class="field-label direct-label">Your hourly rate</div>
+              <input class="field-input" id="hourlyWageInput" type="text" inputmode="decimal" autocomplete="off" placeholder="RM 10 / hr" />
+            </div>
+            <div class="field-block" id="monthlyIncomeBlock" hidden>
+              <div class="field-label direct-label">Your monthly salary</div>
+              <input class="field-input" id="monthlySalaryInput" type="text" inputmode="decimal" autocomplete="off" placeholder="RM 3,000 / month" />
+              <p class="field-currency-note">Converted to hourly using Malaysia's 173 hrs/month standard (48 hrs/week).</p>
+            </div>
           </div>
-          <div class="loading-title">Crunching your arrival date...</div>
-          <p class="loading-caption" id="loadingCaption">Analysing your saving speed</p>
+        </div>
+        <div class="layout-bottom layout-bottom-input">
+          <button class="btn-primary" id="toResultFromIncome" type="button" disabled>See My Result</button>
         </div>
       </div>
     </div>
 
-<div class="screen" id="s3">
+
+    <div class="screen" id="s3">
       <div class="scroll-surface scroll-surface-results">
         <div class="scr-pad scr-scroll result-scroll" id="resultBody">
         <div class="nav-back" data-back="2"><svg viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -2440,7 +2456,7 @@ button, input, textarea, select {
               <button type="button" class="route-chart-info-btn" id="routeChartInfoBtn" aria-label="Why is WishBooster faster?" aria-expanded="false" aria-controls="routeChartInfoPopover">🤔 Why booster tho? 🚀 👆</button>
               <div class="route-chart-info-popover" id="routeChartInfoPopover" role="tooltip">
                 <p><strong>Regular saving 🏦</strong> — based on normal bank rate (~3% p.a.)</p>
-                <p><strong>WishBooster 🚀</strong> — 1.6% monthly compound on your balance (~21% p.a.). Ngl that's why booster hits different on the chart.</p>
+                <p id="routeBoosterInfoText"><strong>WishBooster 🚀</strong> — rate depends on your wish goal amount.</p>
               </div>
             </div>
             <div class="route-tooltip-box" id="routeTooltip" role="status" aria-live="polite"></div>
@@ -2490,21 +2506,7 @@ button, input, textarea, select {
                 <span class="route-labor-pill-icon">⏱️</span>
                 <span class="route-labor-pill-text">RM 150/mo ≈ <strong>17 hrs</strong> of work at your rate</span>
               </div>
-              <div class="route-setting-item">
-                <div class="route-setting-top">
-                  <span class="route-setting-emoji">💵</span>
-                  <span class="route-setting-title">Your hourly rate</span>
-                </div>
-                <div class="route-setting-controls">
-                  <span class="route-setting-prefix">RM</span>
-                  <label class="route-inline-field">
-                    <input id="routeWageInput" inputmode="decimal" type="text" autocomplete="off" value="10" aria-label="Hourly rate">
-                  </label>
-                  <span class="route-setting-suffix">/hr</span>
-                </div>
-                <p class="route-setting-caption">We use this to show work hours you save</p>
-              </div>
-              <div class="route-setting-item">
+<div class="route-setting-item">
                 <div class="route-setting-top">
                   <span class="route-setting-emoji">📈</span>
                   <span class="route-setting-title">Chart timeline</span>
@@ -2549,7 +2551,7 @@ button, input, textarea, select {
             <p class="result-hero-sub" id="resultHeroSub">WishItem goal</p>
             <p class="result-hero-big" id="resultHeroBig">WishBooster saves you 1.1 days of hustle!</p>
             <p class="result-hero-meta">WishBooster is an investment-based feature.</p>
-            <p class="result-hero-meta" id="resultHeroMeta">Based on an 8-hr workday earned via investment gains</p>
+            <p class="result-hero-meta" id="resultHeroMeta">WishBooster rate depends on your wish goal amount</p>
           </div>
         </section>
 
@@ -2574,8 +2576,7 @@ button, input, textarea, select {
           <details class="calc-accordion card-soft">
             <summary>View calculation assumptions</summary>
             <div class="calc-accordion-body">
-              <div class="wage-row" id="wageRow">Base hourly rate RM <span id="wageDisplay">8.72</span> <span class="chev">▼</span></div>
-            </div>
+</div>
           </details>
           <div class="cta-seed-only">
             <button class="btn-primary" id="btnSeedMoney">Save My Plan &amp; Enter Wishlist Giveaway</button>
@@ -2860,11 +2861,12 @@ button, input, textarea, select {
     monthly: { key: 'monthly', label: 'Monthly', labelKo: 'Monthly', intervalDays: 30 },
   };
 
-  const INVESTMENT_TIERS = [
-    { minUsd: 500, rate: 0.108, label: '10.8%', tier: '500_plus' },
-    { minUsd: 100, rate: 0.096, label: '9.6%', tier: '100_plus' },
-    { minUsd: 50, rate: 0.084, label: '8.4%', tier: '50_plus' },
-    { minUsd: 0, rate: 0.016, label: '1.6%', tier: 'under_50' },
+ const WISH_BOOSTER_TIERS = [
+    { minRm: 10000, rate: 0.216, label: '21.6%', tier: '10000_plus' },
+    { minRm: 5000, rate: 0.18, label: '18.0%', tier: '5000_plus' },
+    { minRm: 3000, rate: 0.15, label: '15.0%', tier: '3000_plus' },
+    { minRm: 1000, rate: 0.12, label: '12.0%', tier: '1000_plus' },
+    { minRm: 0, rate: 0.084, label: '8.4%', tier: '0_plus' },
   ];
 
   function fmtRM(value) {
@@ -2888,26 +2890,33 @@ button, input, textarea, select {
     return `${y}.${m}.${day}`;
   }
 
-  function balanceToUsd(balanceRM) {
-    return balanceRM / RM_PER_USD;
-  }
-
-  function getInvestmentRate(balanceRM) {
-    const usd = balanceToUsd(balanceRM);
-    for (const tier of INVESTMENT_TIERS) {
-      if (usd >= tier.minUsd) return tier.rate;
-    }
-    return 0.016;
-  }
-
-  function getTierInfo(balanceRM) {
-    const usd = balanceToUsd(balanceRM);
-    for (const tier of INVESTMENT_TIERS) {
-      if (usd >= tier.minUsd) {
-        return { ...tier, annualPct: tier.rate * 100, balanceUsd: usd };
+  function getWishBoosterTier(wishAmountRM) {
+    const amount = Math.max(0, Number(wishAmountRM) || 0);
+    for (const tier of WISH_BOOSTER_TIERS) {
+      if (amount >= tier.minRm) {
+        return { ...tier, annualPct: tier.rate * 100, wishAmountRm: amount };
       }
     }
-    return { ...INVESTMENT_TIERS[3], annualPct: 1.6, balanceUsd: usd };
+    const fallback = WISH_BOOSTER_TIERS[WISH_BOOSTER_TIERS.length - 1];
+    return { ...fallback, annualPct: fallback.rate * 100, wishAmountRm: amount };
+  }
+
+  function getWishBoosterRate(wishAmountRM) {
+    return getWishBoosterTier(wishAmountRM).rate;
+  }
+
+  function getInvestmentRate(wishAmountRM) {
+    return getWishBoosterRate(wishAmountRM);
+  }
+
+  function getTierInfo(wishAmountRM) {
+    return getWishBoosterTier(wishAmountRM);
+  }
+
+ function formatWishBoosterRateNote(wishAmountRM) {
+    const tier = getWishBoosterTier(wishAmountRM);
+    const amountLabel = `RM ${Math.round(tier.wishAmountRm).toLocaleString('en-MY')}`;
+    return `<strong>WishBooster 🚀</strong> — ${tier.label} p.a. (Rate dynamically applied to your ${amountLabel} goal amount).`;
   }
 
   /** Monthly compound + periodic deposits */
@@ -2915,12 +2924,16 @@ button, input, textarea, select {
     const {
       tiered = false,
       flatRate = SAVING_RATE,
+      wishAmountRM = 0,
       horizonDays,
       depositAmount,
       intervalDays,
       seedFund = SEED_FUND,
       startDate = new Date(),
     } = opts;
+
+    const tierRate = tiered ? getWishBoosterRate(wishAmountRM) : null;
+    const tierInfo = tiered ? getWishBoosterTier(wishAmountRM) : null;
 
     let balance = seedFund;
     let nextDeposit = intervalDays;
@@ -2929,11 +2942,11 @@ button, input, textarea, select {
       month: 0,
       balance,
       date: new Date(startDate),
-      tier: getTierInfo(balance),
+      tier: tierInfo || getTierInfo(wishAmountRM),
     }];
 
     for (let day = 1; day <= horizonDays; day++) {
-      const rate = tiered ? getInvestmentRate(balance) : flatRate;
+      const rate = tiered ? tierRate : flatRate;
       balance *= 1 + rate / 365;
 
       if (day >= nextDeposit - 0.001) {
@@ -2947,7 +2960,7 @@ button, input, textarea, select {
           month: day / 30,
           balance,
           date: addDays(startDate, day),
-          tier: getTierInfo(balance),
+          tier: tierInfo || getTierInfo(wishAmountRM),
         });
       }
     }
@@ -2958,17 +2971,21 @@ button, input, textarea, select {
     const {
       tiered = false,
       flatRate = SAVING_RATE,
+      wishAmountRM = 0,
       depositAmount,
       intervalDays,
       seedFund = SEED_FUND,
       startDate = new Date(),
     } = opts;
 
+    const tierRate = tiered ? getWishBoosterRate(wishAmountRM) : null;
+    const tierInfo = tiered ? getWishBoosterTier(wishAmountRM) : null;
+
     let balance = seedFund;
     let nextDeposit = intervalDays;
 
     for (let day = 1; day <= maxDays; day++) {
-      const rate = tiered ? getInvestmentRate(balance) : flatRate;
+      const rate = tiered ? tierRate : flatRate;
       balance *= 1 + rate / 365;
 
       if (day >= nextDeposit - 0.001) {
@@ -2982,7 +2999,7 @@ button, input, textarea, select {
           month: day / 30,
           balance,
           date: addDays(startDate, day),
-          tier: getTierInfo(balance),
+          tier: tierInfo || getTierInfo(wishAmountRM),
         };
       }
     }
@@ -3073,6 +3090,7 @@ button, input, textarea, select {
 
     const growthPoints = simulatePath({
       tiered: true,
+      wishAmountRM: targetAmount,
       horizonDays,
       depositAmount,
       intervalDays: cycle.intervalDays,
@@ -3096,6 +3114,7 @@ button, input, textarea, select {
 
     const growthReach = findReachDay({
       tiered: true,
+      wishAmountRM: targetAmount,
       depositAmount,
       intervalDays: cycle.intervalDays,
       startDate,
@@ -3123,7 +3142,7 @@ button, input, textarea, select {
       : 0;
 
     const growthDaysToGoal = growthReach?.day || null;
-    const endTier = growthReach?.tier || getTierInfo(SEED_FUND);
+    const endTier = getWishBoosterTier(targetAmount);
 
     const maxReachDay = Math.max(
       savingReach?.day || horizonDays,
@@ -3176,6 +3195,7 @@ button, input, textarea, select {
     const tiered = input.tiered !== false;
     return simulatePath({
       tiered,
+      wishAmountRM: input.wishAmountRM || input.targetAmount || 0,
       flatRate: input.flatRate || SAVING_RATE,
       horizonDays: horizonYears * 365,
       depositAmount,
@@ -3216,11 +3236,14 @@ button, input, textarea, select {
     STABLE_RATE,
     PERIOD_YEARS,
     CYCLES,
-    INVESTMENT_TIERS,
+    WISH_BOOSTER_TIERS,
     fmtRM,
     fmtOne,
     fmtDate,
     addDays,
+    getWishBoosterTier,
+    getWishBoosterRate,
+    formatWishBoosterRateNote,
     getInvestmentRate,
     getTierInfo,
     simulatePath,
@@ -3254,8 +3277,27 @@ button, input, textarea, select {
     'Weekly': 4.3,
     'Monthly': 1,
   };
-  const WISH_MONTHLY_COMPOUND_RATE = 0.016;
   const SAVING_ANNUAL_INTEREST_RATE = 0.03;
+
+  function getWishBoosterAnnualRate(wishAmountRM) {
+    if (global.WishFastFinance?.getWishBoosterRate) {
+      return global.WishFastFinance.getWishBoosterRate(wishAmountRM);
+    }
+    return 0.084;
+  }
+
+function updateWishBoosterInfoText(wishAmountRM) {
+    const el = $('routeBoosterInfoText');
+    if (!el) return;
+    if (global.WishFastFinance?.formatWishBoosterRateNote) {
+      el.innerHTML = global.WishFastFinance.formatWishBoosterRateNote(wishAmountRM);
+      return;
+    }
+    const rate = getWishBoosterAnnualRate(wishAmountRM);
+    const pct = (rate * 100).toFixed(1).replace(/\.0$/, '');
+    const amountLabel = `RM ${Math.round(wishAmountRM).toLocaleString('en-MY')}`;
+    el.innerHTML = `<strong>WishBooster 🚀</strong> — ${pct}% p.a. (Rate dynamically applied to your ${amountLabel} goal amount).`;
+  }
   const DEFAULT_CHART_YEARS = 1;
   const CHART_YEARS = DEFAULT_CHART_YEARS;
   const CHART_MAX_DAY = DEFAULT_CHART_YEARS * 365;
@@ -3292,7 +3334,7 @@ button, input, textarea, select {
   const $ = (id) => document.getElementById(id);
 
   function dailyGrowthRate(routeType) {
-    if (routeType === 'wish') return Math.pow(1 + WISH_MONTHLY_COMPOUND_RATE, 1 / 30) - 1;
+    if (routeType === 'wish') return getWishBoosterAnnualRate(state.price) / 365;
     if (routeType === 'saving') return Math.pow(1 + SAVING_ANNUAL_INTEREST_RATE, 1 / 365) - 1;
     return 0;
   }
@@ -4106,9 +4148,11 @@ button, input, textarea, select {
         : 'Save hustle hours with WishBooster!';
     }
     if ($('resultHeroMeta')) {
+      const tier = global.WishFastFinance?.getWishBoosterTier?.(state.price) || global.WishFastFinance?.getTierInfo?.(state.price);
+      const rateLabel = tier?.label || '—';
       $('resultHeroMeta').textContent = laborHours > 0
-        ? 'Based on an 8-hr workday earned via investment gains'
-        : 'Booster runs can lighten your hustle load';
+        ? `WishBooster ${rateLabel} p.a. for your goal — returns covered ${laborHours} hrs of work`
+        : `WishBooster ${rateLabel} p.a. for your wish goal`;
     }
     if ($('miniSaved')) {
       $('miniSaved').textContent = daysSaved > 0 ? `${daysSaved} days` : '—';
@@ -4563,6 +4607,7 @@ button, input, textarea, select {
     if (pins) pins.innerHTML = '';
 
     hideTooltip();
+    updateWishBoosterInfoText(state.price);
     updateGoalChartUI(savingHit, wishHit, laborMetrics, snapshot.monthlyBudget);
 
     if ($('routeChanceMain')) $('routeChanceMain').textContent = `Goal hit chance ${chance}%`;
@@ -4573,9 +4618,11 @@ button, input, textarea, select {
 
     const legend = $('routeLegend');
     if (legend) {
+      const currentRate = getWishBoosterAnnualRate(state.price);
+      const currentRatePct = (currentRate * 100).toFixed(1).replace(/\.0$/, '');
       legend.innerHTML = `
         <span><i class="route-dot"></i>Regular saving 🏦</span>
-        <span><i class="route-dot orange"></i>WishBooster invest sim 🚀 (current goal)</span>
+        <span><i class="route-dot orange"></i>WishBooster 🚀 (${currentRatePct}% p.a.)</span>
         ${state.extraRoutes.length ? '<span><i class="route-dot blue"></i>Extra race ⚡ (custom)</span>' : ''}
       `;
     }
@@ -4948,6 +4995,8 @@ button, input, textarea, select {
     depositAmount: 150,
     wage: F.DEFAULT_WAGE,
     cycleKey: 'monthly',
+    employmentType: null,
+    monthlySalary: null,
   };
 
   const $ = (id) => document.getElementById(id);
@@ -5251,10 +5300,12 @@ button, input, textarea, select {
   );
 
   function showResultScreen() {
-    const loadingEl = $('loading');
+    const curEl = $(current);
     const resultEl = $('s3');
-    loadingEl.classList.remove('active');
-    loadingEl.style.transform = 'translateX(-100%)';
+    if (curEl && curEl !== resultEl) {
+      curEl.classList.remove('active');
+      curEl.style.transform = 'translateX(-100%)';
+    }
     resultEl.style.transition = 'none';
     resultEl.style.transform = 'translateX(0)';
     resultEl.classList.add('active', 'result-fade-in');
@@ -5329,9 +5380,13 @@ button, input, textarea, select {
     );
     setText(
       'resultHeroMeta',
-      laborHours > 0
-        ? 'Based on an 8-hr workday earned via investment gains'
-        : 'Booster runs can lighten your hustle load'
+      (() => {
+        const tier = F.getWishBoosterTier?.(state.targetAmount) || F.getTierInfo?.(state.targetAmount);
+        const rateLabel = tier?.label || '—';
+        return laborHours > 0
+          ? `WishBooster ${rateLabel} p.a. for your goal — returns covered ${laborHours} hrs of work`
+          : `WishBooster ${rateLabel} p.a. for your wish goal`;
+      })()
     );
 
     setText('miniLabor', laborHours > 0 ? `${laborDays} days` : '—');
@@ -5394,7 +5449,6 @@ button, input, textarea, select {
 
     setText('miniGoal', F.fmtRM(activeRoute.price ?? route?.price ?? state.targetAmount));
     setText('miniSaved', daysSaved > 0 ? `${daysSaved} days` : '—');
-    setText('wageDisplay', r.wage.toFixed(2));
 
     const savedPct = Math.min(99, Math.round((F.SEED_FUND / route.price) * 100 + 20));
     setText('dashItemName', state.itemName);
@@ -5524,17 +5578,6 @@ button, input, textarea, select {
     }
   }
 
-  function editWage() {
-    WishFastTracker.track('click_edit_wage', { wage: state.wage });
-    const raw = prompt('Enter your hourly rate (RM)', state.wage.toFixed(2));
-    if (raw == null) return;
-    const val = parseFloat(String(raw).replace(/[^0-9.]/g, ''));
-    if (!Number.isFinite(val) || val <= 0) return alert('Please enter a valid hourly rate.');
-    state.wage = val;
-    runSimulation();
-    if (routeSnapshot) renderLegacySections(routeSnapshot);
-  }
-
   WishRouteChart.init({ onUpdate: onRouteChartUpdate });
 document.querySelectorAll('.period-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -5544,6 +5587,81 @@ document.querySelectorAll('.period-btn').forEach((btn) => {
       updateDirectInputPreview();
     });
   });
+
+  
+  const MALAYSIA_MONTHLY_HOURS = 173;
+
+  function updateIncomeContinueButton() {
+    const btn = $('toResultFromIncome');
+    if (!btn) return;
+    if (!state.employmentType) {
+      btn.disabled = true;
+      return;
+    }
+    if (state.employmentType === 'student') {
+      btn.disabled = parsePreviewNumber($('hourlyWageInput')?.value, 0) <= 0;
+      return;
+    }
+    btn.disabled = parsePreviewNumber($('monthlySalaryInput')?.value, 0) <= 0;
+  }
+
+  function applyIncomeToWage() {
+    if (state.employmentType === 'student') {
+      const hourly = parsePreviewNumber($('hourlyWageInput')?.value, 0);
+      if (hourly <= 0) return false;
+      state.wage = hourly;
+      state.monthlySalary = null;
+      return true;
+    }
+    if (state.employmentType === 'worker') {
+      const monthly = parsePreviewNumber($('monthlySalaryInput')?.value, 0);
+      if (monthly <= 0) return false;
+      state.monthlySalary = monthly;
+      state.wage = Math.max(0.01, monthly / MALAYSIA_MONTHLY_HOURS);
+      return true;
+    }
+    return false;
+  }
+
+  function resetIncomeScreen() {
+    state.employmentType = null;
+    state.monthlySalary = null;
+    document.querySelectorAll('.employment-type-btn').forEach((btn) => btn.classList.remove('selected'));
+    if ($('hourlyIncomeBlock')) $('hourlyIncomeBlock').hidden = true;
+    if ($('monthlyIncomeBlock')) $('monthlyIncomeBlock').hidden = true;
+    if ($('hourlyWageInput')) $('hourlyWageInput').value = '';
+    if ($('monthlySalaryInput')) $('monthlySalaryInput').value = '';
+    updateIncomeContinueButton();
+  }
+
+  function setupIncomeScreen() {
+    document.querySelectorAll('.employment-type-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.employment-type-btn').forEach((b) => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.employmentType = btn.dataset.type;
+        if ($('hourlyIncomeBlock')) $('hourlyIncomeBlock').hidden = state.employmentType !== 'student';
+        if ($('monthlyIncomeBlock')) $('monthlyIncomeBlock').hidden = state.employmentType !== 'worker';
+        updateIncomeContinueButton();
+      });
+    });
+    $('hourlyWageInput')?.addEventListener('input', updateIncomeContinueButton);
+    $('monthlySalaryInput')?.addEventListener('input', updateIncomeContinueButton);
+    $('toResultFromIncome')?.addEventListener('click', () => {
+      if (!applyIncomeToWage()) {
+        alert(state.employmentType === 'student'
+          ? 'Please enter your hourly rate.'
+          : 'Please enter your monthly salary.');
+        return;
+      }
+      runSimulation();
+      syncRouteChartFromState();
+      $('s3').classList.remove('result-fade-in');
+      showResultScreen();
+    });
+  }
+
+  setupIncomeScreen();
 
   $('toS3').addEventListener('click', () => {
     captureInputs();
@@ -5556,12 +5674,9 @@ document.querySelectorAll('.period-btn').forEach((btn) => {
     routeSnapshot = null;
     window.WishRouteChart?.resetChartAnimation?.();
     runSimulation();
-    resetLoadingGauge();
-    $('loadingCaption').textContent = LOADING_LINES[0];
-    $('loadingCaption').style.opacity = '1';
+    resetIncomeScreen();
     $('s3').classList.remove('result-fade-in');
-    goTo('loading');
-    runLoadingSequence(showResultScreen);
+    goTo('sIncome');
   });
 
   $('btnSeedMoney').addEventListener('click', () => {
@@ -5578,7 +5693,6 @@ document.querySelectorAll('.period-btn').forEach((btn) => {
   });
 
   $('btnShareS8').addEventListener('click', () => handleShare('friend_brag'));
-  $('wageRow').addEventListener('click', editWage);
 
   let shareToastTimer = null;
   function showShareToast() {
@@ -5668,7 +5782,8 @@ document.querySelectorAll('.period-btn').forEach((btn) => {
       $('itemInput')?.classList.add('is-editing');
       setPeriodMonths(12);
       $('s3').classList.remove('result-fade-in');
-      $('loading').classList.remove('active');
+      $('sIncome')?.classList.remove('active');
+      resetIncomeScreen();
       btnSubmitContact.disabled = true;
       btnSubmitContact.textContent = btnSubmitContactLabel;
       routeSnapshot = null;
